@@ -1,7 +1,9 @@
-Linux Command Line
 
-1. Introduction to the Linux Command Line
-   Welcome to the Linux command line (shell, terminal, or console)—a powerful text-based interface. While GUIs are user-friendly, the CLI offers unmatched power, flexibility, and speed, making it essential for developers, sysadmins, and power users.
+# Linux Command Line
+
+## 1. Introduction to the Linux Command Line
+
+Welcome to the Linux command line (shell/terminal/console)—a powerful text-based interface. While GUIs are user-friendly, the CLI offers unmatched power, flexibility, and speed, making it essential for developers, sysadmins, and power users.
 
 **Why the Command Line Matters:**
 
@@ -9,18 +11,20 @@ Linux Command Line
 * **Power & Flexibility:** Perform advanced configuration and troubleshooting not available in GUIs.
 * **Efficiency:** One well-crafted command can replace dozens of GUI clicks.
 * **Remote Access:** Manage servers over SSH.
-* **Lightweight:** Uses far fewer resources than a full desktop—key on servers.
+* **Lightweight:** Uses far fewer resources than a full desktop, which is key on servers.
 * **Consistency:** Core tools and syntax remain the same across distributions.
 
-2. Structure of a Command
+## 2. Structure of a Command
+
+The basic syntax of a command is:
 
 ```
 command [options] [arguments]
 ```
 
-* **command:** program name (e.g., `ls`, `cp`)
-* **options:** modify behavior (e.g., `-l`, `--recursive`)
-* **arguments:** targets (files, directories, patterns)
+* **command:** Program name (e.g., `ls`, `cp`).
+* **options:** Modify behavior (e.g., `-l`, `--recursive`).
+* **arguments:** Targets (files, directories, patterns).
 
 **Example:**
 
@@ -28,32 +32,17 @@ command [options] [arguments]
 grep -rin "TODO" ~/projects
 ```
 
-3. Opening a Terminal & The Prompt
+This command searches recursively (`-r`) for the string "TODO" (case-insensitive, `-i`) in the `~/projects` directory, showing line numbers (`-n`).
 
-**Terminal vs. Console: What's the Difference?**
-While often used interchangeably, here’s a quick distinction:
+## 3. Opening a Terminal and the Prompt
 
-* A **console** was historically a physical, direct interface to a computer—think of it as the raw, built-in access point.
-* A **terminal** (or more accurately, a **terminal emulator**) is the software application you use today. It simulates that physical console experience within your graphical desktop. When you open “Terminal” on your Linux machine, you’re launching a terminal emulator.
+A *terminal emulator* (often just called “Terminal”) is the software you use today to access the CLI. It simulates a physical console. Common terminal emulators include **Terminal** (GNOME), **Konsole** (KDE), and **xterm** (lightweight).
 
-Popular examples include:
-
-* **Terminal** (often the default in GNOME-based distributions)
-* **Konsole** (common in KDE environments)
-* **xterm** (a classic and lightweight option)
-
-Essentially, a terminal emulator is your window to the command line, allowing you to type commands and see their output in a text-based environment.
-
-――――――――――――――――――――
-
-**The Command Prompt Format**
-When you open a terminal emulator, you’ll see a prompt indicating the system is ready for your input. It usually looks like this:
+When you open a terminal emulator, you’ll see a *prompt* indicating the system is ready for your input. It usually looks like:
 
 ```
 user@hostname:~/current/path$
 ```
-
-Here’s what each part means:
 
 * **user:** Your current username.
 * **hostname:** The name of your computer.
@@ -63,130 +52,86 @@ Here’s what each part means:
 
 You can customize this prompt’s appearance and information by editing the `PS1` variable in your `~/.bashrc` file.
 
-4. Getting Help
+## 4. Getting Help
 
-* `man <command>`: detailed manual
-* `<command> --help`: quick usage summary
-* `info <command>`: hyperlinked docs
-* `apropos <keyword>`: search man-page descriptions
-* `whatis <command>`: one-line summary
+When you need help with a command, the CLI provides several tools:
 
-**⚡ Bonus Tool: tldr (Too Long; Didn’t Read)**
+* `man <command>`: Detailed manual (full documentation).
+* `<command> --help`: Quick usage summary (common options).
+* `info <command>`: Hyperlinked documentation pages (often more detailed than `man`).
+* `apropos <keyword>`: Search man-page descriptions for a keyword.
+* `whatis <command>`: One-line summary of what a command does.
 
-* `tldr <command>`: For quick, practical examples and common use cases, tldr provides simplified, community-contributed “man pages.” It’s excellent for when you just need to remember how to perform a specific task without sifting through all the details. *Note: tldr is a separate tool and might need to be installed on your system if it’s not available by default.*
+**⚡ Bonus Tool: tldr (Too Long; Didn't Read)** – A simplified help resource.
 
-Here’s the concise version of the “Package Management with DNF” section:
+* `tldr <command>`: Practical examples and common use cases for a command. (Note: `tldr` is a separate tool and might need installation.)
 
-――――――――――――――――――――
+## 5. Package Management with DNF
 
-5. Package Management with DNF
-   Rocky Linux, like other Red Hat-based distributions, uses a robust system for managing software called the RPM Ecosystem. Understanding its core components is essential:
+Rocky Linux (a Red Hat-based distribution) uses the RPM package ecosystem. The core components are:
 
-* **RPM (Red Hat Package Manager):** The low-level package format. An RPM file (`.rpm`) is a self-contained archive that includes the software, metadata about its version, dependencies, and the correct file locations on the system.
-* **DNF (Dandified YUM):** The next-generation package manager you’ll primarily interact with. DNF serves as a smart interface to RPM packages and has replaced the older YUM command.
-* **Repositories:** Centralized online servers (or local directories) that store collections of RPM packages. When you use DNF to install software, it automatically fetches the package (and its dependencies) from these repositories.
+* **RPM (Red Hat Package Manager):** The low-level package format (`.rpm` files) containing software and metadata.
+* **DNF (Dandified YUM):** The next-generation package manager you’ll interact with. It replaced the older `yum`.
+* **Repositories:** Online servers (or local directories) that store collections of RPM packages. DNF automatically fetches packages and their dependencies from repos.
 
-DNF is the default package manager for Rocky Linux. It handles software installation, updates, and removal while managing dependencies automatically. Most DNF commands require `sudo`. When you install software, DNF resolves and installs all required dependencies to ensure the software functions correctly.
+DNF handles software installation, updates, and removal while resolving dependencies automatically. Most DNF commands require `sudo`. When you install software, DNF ensures all required dependencies are also installed.
 
-**Essential DNF Commands**
+**Essential DNF Commands:**
 
-* **Install:**
+* **Install:** `sudo dnf install <package_name(s)>`
+  Example: `sudo dnf install htop alacritty`.
+* **Remove:** `sudo dnf remove <package_name(s)>`
+  Example: `sudo dnf remove htop ulauncher`.
+* **Search:** `dnf search <keyword>` (No sudo needed.)
+  Example: `dnf search apache` (often `httpd` for the Apache web server).
+* **List Installed:** `dnf list installed` (No sudo needed.)
+* **Upgrade All (System Update):** `sudo dnf upgrade`
+  *Crucial for security; run regularly.* (You can also use `sudo dnf update`.)
+* **Upgrade Specific:** `sudo dnf upgrade <package_name>`
+  Example: `sudo dnf upgrade firefox`.
+* **Reinstall:** `sudo dnf reinstall <package_name>`.
+* **Remove Unused Dependencies:** `sudo dnf autoremove`.
+* **Clean Caches:** `sudo dnf clean all`.
 
-  ```bash
-  sudo dnf install <package_name(s)>
-  ```
+## 6. Basic Navigation and File Management
 
-  *Example:* `sudo dnf install htop alacritty`
-* **Remove:**
-
-  ```bash
-  sudo dnf remove <package_name(s)>
-  ```
-
-  *Example:* `sudo dnf remove htop ulauncher`
-* **Search:**
-
-  ```bash
-  dnf search <keyword>
-  ```
-
-  (No `sudo` needed.) *Example:* `dnf search apache` (Often `httpd` for web server)
-* **List Installed:**
-
-  ```bash
-  dnf list installed
-  ```
-
-  (No `sudo` needed.)
-* **Upgrade All (System Update):**
-
-  ```bash
-  sudo dnf upgrade
-  ```
-
-  Crucial for security; run regularly. (`sudo dnf update` works too.)
-* **Upgrade Specific:**
-
-  ```bash
-  sudo dnf upgrade <package_name>
-  ```
-
-  *Example:* `sudo dnf upgrade firefox`
-* **Reinstall:**
-
-  ```bash
-  sudo dnf reinstall <package_name>
-  ```
-* **Remove Unused Dependencies:**
-
-  ```bash
-  sudo dnf autoremove
-  ```
-* **Clean Caches:**
-
-  ```bash
-  sudo dnf clean all
-  ```
-
-――――――――――――――――――――
-
-5. Basic Navigation & File Management
+Use the following commands to move around and manage files/directories:
 
 ```bash
 # Show current directory
 pwd
-
-# List files
-ls -lhSr              # long, human-readable, sorted by size (reverse)
+# List files (long format, human-readable sizes, sort by size reverse)
+ls -lhSr
 
 # Change directory
 cd /path/to/dir
-cd ..                 # parent
-cd -                  # previous directory
-cd                    # home
+cd ..      # go to parent directory
+cd -       # go to previous directory
+cd        # go to home directory
 
 # Make directories
-mkdir -p parent/child # nested in one shot
+mkdir -p parent/child   # nested directories in one command
 
-# Create/update file timestamp
+# Create/update file timestamp (or create an empty file)
 touch file.txt
 
-# Copy
-cp -a src/ dest/      # archive mode: preserves perms, timestamps, symlinks
+# Copy files/directories
+cp -a src/ dest/        # archive mode: preserves perms, timestamps, symlinks
 
-# Move/rename
+# Move or rename
 mv file.txt ../other/
 
-# Remove
-rm -i file.txt        # interactive, safer delete
-rmdir empty-dir
-rm -rf dir-to-delete  # DANGER: no undo
+# Remove files/directories
+rm -i file.txt          # interactive (safer delete, prompts for confirmation)
+rmdir empty-dir        # remove empty directory
+rm -rf dir-to-delete    # DANGER: force remove directory and contents (no undo)
 ```
 
-**⚡ Bonus Tool: Ranger (Terminal File Manager)**
-For a visual and interactive way to navigate and manage files directly within your terminal, `ranger` is an excellent tool. It provides a two-pane or three-pane interface similar to graphical file managers, allowing you to browse directories, preview files, and perform common file operations with keyboard shortcuts. *To use Ranger, you’ll likely need to install it first if it’s not present on your system. Once installed, simply type `ranger` in your terminal to launch it.*
+* ⚡ **Bonus Tool: Ranger (Terminal File Manager):** Use `ranger` for a visual, two- or three-pane interface in the terminal. It lets you browse directories and preview files with keyboard shortcuts, similar to a GUI file manager. (Install it first with `sudo dnf install ranger` on Rocky Linux, then run `ranger`.)
 
-6. Working with File Content
+## 7. Working with File Content
+
+View and search file contents with these commands:
 
 ```bash
 # View entire file
@@ -195,186 +140,151 @@ cat file.txt
 # Page through long files
 less /var/log/messages
 
-# Head & tail
-head -n5 file.txt
-tail -n20 file.txt
+# View first/last lines
+head -n5 file.txt      # first 5 lines
+tail -n20 file.txt     # last 20 lines
+
+# Follow a file (e.g., live log)
 tail -f /var/log/messages
 
 # Search text
 grep -Rin "error" ~/projects
 ```
 
-Consider faster alternatives like `ripgrep` (`rg`) for large codebases.
+*Consider faster alternatives like `ripgrep` (`rg`) for searching large codebases.*
 
-――――――――――――――――――――
+## 8. Permissions and Ownership
 
-7. Permissions & Ownership
-   Permissions and ownership are fundamental to Linux security and access control. They define who can perform actions on files and directories.
+Permissions and ownership control access to files and directories.
 
-**Viewing Permissions**
-Use `ls -l` to see the permission string (e.g., `drwxr-xr--`) along with other file details.
+**Viewing Permissions:** Use `ls -l` to see permissions. Example output:
 
-* **First Character:**
-
-  * `d`: Directory
-  * `-`: File
-  * `l`: Symbolic Link
-* **Next Nine Characters (Permissions):** Divided into three groups of three:
-
-  * **User (Owner):** Permissions for the file’s owner.
-  * **Group:** Permissions for the file’s owning group.
-  * **Others (World):** Permissions for everyone else.
-
-Each character in these groups represents:
-
-* `r`: Read (view file content / list directory content)
-* `w`: Write (modify/delete file / create/delete files in directory)
-* `x`: Execute (run file as program / enter directory)
-* `-`: Permission not granted
-
-*Example* `drwxr-xr--`: It’s a directory. Owner has read, write, execute. Group has read, execute. Others have only read.
-
-――――――――――――――――――――
-
-**Changing Permissions (`chmod`)**
-The `chmod` command modifies permissions.
-
-1. **Symbolic Mode (Easier to read)**
-   Uses `who` + `+`/`-`/`=` permission syntax.
-
-   * **Who:** `u` (user), `g` (group), `o` (others), `a` (all)
-   * **Action:** `+` (add), `-` (remove), `=` (set exactly)
-   * **Permissions:** `r` (read), `w` (write), `x` (execute)
-
-   *Examples:*
-
-   ```bash
-   chmod u+x script.sh        # Add execute for owner
-   chmod go-w secret.txt      # Remove write for group and others
-   ```
-
-2. **Numeric (Octal) Mode (More concise)**
-   Uses a three-digit number (`chmod XXX file`). Each digit represents User, Group, Others respectively. Sum the values for desired permissions:
-
-   | Sum | Permissions |
-   | :-- | :---------- |
-   | 0   | ---         |
-   | 1   | --x         |
-   | 2   | -w-         |
-   | 3   | -wx         |
-   | 4   | r--         |
-   | 5   | r-x         |
-   | 6   | rw-         |
-   | 7   | rwx         |
-
-   *Examples:*
-
-   ```bash
-   chmod 755 script.sh         # rwxr-xr-x (Common for scripts/directories)
-   chmod 644 config.yaml       # rw-r--r-- (Common for config files)
-   chmod -R 770 my_project/    # Recursively set rwxrwx--- for project and its contents
-   ```
-
-――――――――――――――――――――
-
-**Changing Ownership (`chown`)**
-The `chown` command changes the user and/or group owner. Requires `sudo`.
-
-* `sudo chown <new_owner> <file/dir>`: Change user owner.
-* `sudo chown :<new_group> <file/dir>`: Change group owner.
-* `sudo chown <new_owner>:<new_group> <file/dir>`: Change both.
-
-  * Tip: `<new_owner>:` (without group) defaults group to the new owner’s primary group.
-* `-R`: Recursive (for directories and their contents).
-
-*Examples:*
-
-```bash
-sudo chown alice:developers project/       # Change project/ owner to alice and group to developers
-sudo chown -R bob: project_data/           # Recursively change owner to bob for project_data/ and all contents; group defaults to bob’s primary group
+```
+drwxr-xr--  2 alice developers 4096 Mar  5 10:00 mydir
 ```
 
-*I understand. I’ll simplify the “Process Management” section, keeping only the most essential information and commands for a beginner in a university Linux basics course.*
+* The first character shows the file type: `d` (directory), `-` (file), `l` (symbolic link).
+* The next nine characters are permissions, divided into three groups of three: **user/owner**, **group**, and **others**.
 
-――――――――――――――――――――
+  * `r` (read), `w` (write), `x` (execute). A `-` means the permission is not granted.
 
-8. Process Management
-   Process management involves monitoring and controlling the programs and tasks running on your Linux system. Understanding processes is crucial for troubleshooting simple issues and seeing what your computer is doing.
+For example, `drwxr-xr--` means: it's a directory (`d`); owner has read/write/execute (`rwx`); group has read/execute (`r-x`); others have only read (`r--`).
 
-**The `ps` Command: Viewing Processes**
-The `ps` (process status) command shows you what’s currently running.
+### Changing Permissions (`chmod`)
 
-* **Basic `ps` Output (Processes in your current terminal)**
-  When you run `ps` without any options, it shows only the processes linked to your current terminal window:
+Modify permissions with `chmod`:
 
-  ```bash
-  ps
-  # Example Output:
-  #    PID TTY          TIME CMD
-  #   2925 pts/0    00:00:00 bash
-  #  12968 pts/0    00:00:00 ps
-  ```
+* **Symbolic Mode:** Use `u`, `g`, `o`, `a` (user, group, others, all) with `+` (add), `-` (remove), or `=` (set exactly).
 
-  **What the Columns Mean:**
+  * Example: `chmod u+x script.sh` (add execute for owner).
+  * Example: `chmod go-w secret.txt` (remove write for group and others).
 
-  * **PID:** Process ID. A unique number for each running program.
-  * **TTY:** Terminal. The terminal where the process is running. A `?` means it’s not tied to a specific terminal.
-  * **TIME:** CPU Time. How much CPU time the process has used, not how long it’s been running.
-  * **CMD:** Command. The actual command that started the process.
+* **Numeric (Octal) Mode:** Use three octal digits (`chmod XYZ file`), each digit 0–7: read=4, write=2, execute=1. Add values for each class.
 
-* **Viewing All Your Processes (`ps x`)**
-  To see all processes started by your user account, even those not tied to your current terminal:
+| Sum | Permissions |
+| :-: | ----------- |
+|  0  | ---         |
+|  1  | --x         |
+|  2  | -w-         |
+|  3  | -wx         |
+|  4  | r--         |
+|  5  | r-x         |
+|  6  | rw-         |
+|  7  | rwx         |
 
-  ```bash
-  ps x
-  ```
+* Example: `chmod 755 script.sh` sets `rwxr-xr-x`. (Common for scripts/directories.)
+* Example: `chmod 644 config.yaml` sets `rw-r--r--`. (Common for config files.)
+* Example: `chmod -R 770 my_project/` sets `rwxrwx---` for the project directory and all its contents (recursive).
 
-  This output will likely show more processes, including programs like web browsers or graphical applications you’ve launched. You might also see a new column:
+### Changing Ownership (`chown`)
 
-  * **STAT** (Process Status): Shows the current state of the process (e.g., `S` for sleeping, `R` for running).
+Change file/directory owner with `chown` (requires `sudo`):
 
-* **Viewing All Processes on the System (`ps aux`)**
-  This is one of the most common and useful ways to use `ps`. It displays all processes running on the entire system, regardless of who started them or which terminal they’re associated with.
+* `sudo chown <new_owner> <file/dir>`: Change the user owner only.
+* `sudo chown :<new_group> <file/dir>`: Change the group owner only.
+* `sudo chown <new_owner>:<new_group> <file/dir>`: Change both owner and group.
 
-  ```bash
-  ps aux
-  ```
+  * Tip: If you use `sudo chown new_owner:`, the group will default to the new owner's primary group.
+* Use `-R` to apply recursively to directories and their contents.
 
-  **Why `ps aux` Is So Useful (New Columns):**
+Examples:
 
-  * **USER:** The name of the user who owns the process. Easier to read than a numerical user ID.
-  * **%CPU:** The percentage of your computer’s CPU that the process is currently using. High numbers can indicate a busy or stuck program.
-  * **%MEM:** The percentage of your computer’s memory (RAM) that the process is using. High numbers can indicate a memory-hungry application.
-  * **START:** The time or date when the process began. Useful for seeing if a program has unexpectedly restarted.
+```bash
+sudo chown alice:developers project/   # owner=alice, group=developers
+sudo chown -R bob: project_data/       # owner=bob for project_data/ and all inside; group=bob's group
+```
+
+> I understand. I'll simplify the "Process Management" section, keeping only the most essential information and commands for a beginner in a university Linux basics course.
+
+## 9. Process Management
+
+Process management involves monitoring and controlling programs running on your Linux system. Understanding processes is crucial for troubleshooting and seeing what your computer is doing.
+
+### The `ps` Command: Viewing Processes
+
+Use `ps` (process status) to see running processes.
+
+```bash
+ps
+# Example Output:
+#    PID TTY          TIME CMD
+#   2925 pts/0    00:00:00 bash
+#  12968 pts/0    00:00:00 ps
+```
+
+* **PID:** Process ID (unique number for each running program).
+* **TTY:** Terminal; `?` means not tied to a specific terminal.
+* **TIME:** CPU time used by the process (not wall-clock time).
+* **CMD:** The command that started the process.
+
+#### Viewing All Your Processes
+
+To see all processes started by your user (even those not tied to the current terminal):
+
+```bash
+ps x
+```
+
+This shows more processes (e.g., graphical apps). You might see a `STAT` column, indicating the process state (e.g., `S` = sleeping, `R` = running).
+
+#### Viewing All Processes on the System
+
+For all processes on the system (regardless of user):
+
+```bash
+ps aux
+```
+
+* **USER:** Owner of the process (name, easier than numeric UID).
+* **%CPU:** Percent of CPU used by the process.
+* **%MEM:** Percent of memory (RAM) used by the process.
+* **START:** Time or date when the process began.
 
 Think of `ps aux` as your primary tool for a quick overview of system activity.
 
-――――――――――――――――――――
+### Beyond `ps` (Basic Process Control for Beginners)
 
-**Beyond `ps` (Basic Process Control for Beginners)**
-While `ps` helps you see processes, sometimes you need to manage them.
-
-* **top:** An interactive command that shows processes in real time, sorted by CPU usage. It’s like a live task manager in your terminal. Press `q` to exit `top`.
-* **kill <PID>:** If a program is frozen or misbehaving, you can often stop it using the `kill` command with its PID.
-
-  * **How to use:** First, find the PID of the problematic process using `ps aux` or `top`. Then, run `kill <PID>`.
-  * *Example:* If a process with PID `12345` is frozen: `kill 12345`
-
-**⚡ Bonus Tool: htop (Interactive Process Viewer)**
-`htop` is an enhanced and more user-friendly alternative to `top`. It provides a colorful, interactive display of processes, resource usage meters, and allows for easier sorting and killing of processes with keyboard shortcuts.
-
-* Not installed by default. Install with:
+* **`top`:** An interactive, real-time process viewer (like a terminal task manager). Displays processes sorted by CPU usage. Press `q` to exit `top`.
+* **`kill <PID>`:** Stop a frozen or misbehaving process by its PID. First find the PID (with `ps aux` or `top`), then:
 
   ```bash
-  sudo dnf install htop
-  ```
-* Launch with:
-
-  ```bash
-  htop
+  kill 12345
   ```
 
-10. Useful Utilities
+  Example: To stop a process with PID 12345, run `kill 12345`.
+
+⚡ **Bonus Tool: htop (Interactive Process Viewer)**
+`htop` is an enhanced, user-friendly alternative to `top`. It shows a colorful display of processes and resource meters, with easy keyboard shortcuts to sort or kill processes. Install it on Rocky Linux with:
+
+```bash
+sudo dnf install htop
+```
+
+Then run `htop`.
+
+## 10. Useful Utilities
+
+Here are some handy commands and utilities:
 
 ```bash
 find . -type f -name "*.log" -exec gzip {} \;
@@ -384,8 +294,9 @@ sudo <command>
 sudo -i                # interactive root shell
 ```
 
-**Vim (Text Editor)**
-Vim is a powerful, terminal-based text editor that’s widely used in Linux environments. It’s fast, efficient, and available by default on almost all Unix-like systems.
+### Vim (Text Editor)
+
+Vim is a powerful terminal-based text editor, available by default on most Unix-like systems.
 
 **Basic Vim Workflow:**
 
@@ -394,318 +305,331 @@ Vim is a powerful, terminal-based text editor that’s widely used in Linux envi
    ```bash
    vim filename.txt
    ```
-2. **Modes in Vim:**
 
-   * **Normal Mode** (Default): Navigate, delete, copy, paste.
+2. **Vim Modes:**
+
+   * **Normal Mode (default):** Navigate, delete, copy, paste.
    * **Insert Mode:** Type text. Press `i` to enter insert mode.
    * **Command Mode:** Save, quit, and more. Press `:` to enter command mode.
-3. **Essential Commands:**
 
-   * `i` → Enter insert mode to start typing.
-   * `Esc` → Return to normal mode.
+3. **Essential Commands (in Normal Mode):**
+
+   * `i` → Enter insert mode (to start typing).
+   * `<Esc>` → Return to normal mode.
    * `:w` → Save (write) the file.
-   * `:q` → Quit.
+   * `:q` → Quit Vim.
    * `:wq` → Save and quit.
    * `:q!` → Quit without saving.
    * `dd` → Delete (cut) the current line.
-   * `yy` → Copy the current line.
+   * `yy` → Copy (yank) the current line.
    * `p` → Paste after the current line.
    * `/word` → Search for “word” in the file.
    * `n` → Jump to the next search result.
-4. **Exit Vim:**
-   Press `Esc` → Type `:wq` → Press Enter (save and quit).
 
-*Quick Tip:*
-If you accidentally open Vim and don’t know how to exit:
+4. **Exit Vim:** Press `<Esc>`, type `:wq`, and press Enter (save and quit).
 
-```
-Esc  
-:q! [Enter]  
-```
+**Quick Tip:** If you accidentally open Vim and don’t know how to exit: press `<Esc>`, then type `:q!` and press Enter (force quit without saving).
 
-This will force quit without saving.
+## 11. Basic Networking Commands
 
-――――――――――――――――――――
+### SSH (Secure Shell): Remote Server Management
 
-11. Basic Networking Commands
+SSH is a secure way to connect to and manage Linux servers remotely. You can execute commands on a distant server as if you were sitting in front of it.
 
-**SSH (Secure Shell): Remote Server Management**
-SSH is the standard and secure way to connect to and manage Linux servers remotely. It allows you to execute commands on a distant server just as if you were sitting in front of it.
-
-* **Basic Connection:**
+* **Basic Connection:** Connect by specifying your username and the server’s address:
 
   ```bash
   ssh user@remote-host
   ```
 
-  *Example:* `ssh j@192.168.1.100`
-
-  * **user:** Your username on the remote server.
-  * **remote-host:** The IP address or domain name of the server.
-  * **First-Time Connection:** SSH will ask you to confirm its authenticity. Type `yes` and press Enter.
-  * **Password Prompt:** You’ll be prompted for your password on the remote server.
-  * **Default Username:** If your username on the remote server is the same as your local username, you can omit `user@`:
-
-    ```bash
-    ssh remote-host
-    ```
-
-* **Specify a Different Port:**
-  By default, SSH uses port 22. If the remote server’s SSH service is listening on a different port (e.g., 2222), use the `-p` option:
+  * `user`: Your username on the remote server.
+  * `remote-host`: The server’s IP address or domain name.
+* **First-Time Connection:** The first time you connect, SSH will ask you to confirm the server’s authenticity. Type `yes` and press Enter.
+* **Password Prompt:** After confirming, you’ll be prompted for the remote user’s password.
+* **Default Username:** If your local username matches your remote username, you can omit `user@`:
 
   ```bash
-  ssh -p <port_number> user@remote-host
+  ssh remote-host  # if local_user == remote_user
   ```
+* **Specify a Different Port:** If the server uses a non-standard SSH port (not 22), use `-p`:
 
-  *Example:* `ssh -p 2222 j@192.168.1.100`
-
-* **Exiting an SSH Session:**
-  To disconnect and return to your local terminal, type:
+  ```bash
+  ssh -p 2222 user@remote-host
+  ```
+* **Exiting an SSH Session:** To disconnect, type:
 
   ```bash
   exit
   ```
 
-**Other Network Commands**
+### Other Network Commands
 
-* **Test Connectivity (`ping`):**
-
-  ```bash
-  ping -c 4 example.com
-  ```
-* **Secure Copy (`scp`):**
+* **Test Connectivity (`ping`):** Check if a host is reachable. Example:
 
   ```bash
-  scp file.txt user@remote-host:/path/to/dest     # Copy local file to remote
-  scp -r mydir/ user@remote-host:/backup/        # Recursively copy local directory to remote
+  ping -c 4 example.com  # send 4 packets to example.com
   ```
-* **Network Statistics (`netstat` / `ss`):**
-
-  * `netstat` is an older command.
-  * `ss` is a modern, faster alternative.
+* **Secure Copy (`scp`):** Copy files between local and remote hosts using SSH. Examples:
 
   ```bash
-  netstat -tuln       # List listening TCP/UDP ports (numeric)
-  ss -tulwn           # Modern alternative: numeric, verbose
+  scp file.txt user@remote-host:/path/to/dest   # copy local to remote
+  scp -r mydir/ user@remote-host:/backup/      # recursively copy directory
+  ```
+* **Network Statistics (`netstat` / `ss`):** List active connections and ports. `netstat` is older; `ss` is a modern, faster alternative. Examples:
+
+  ```bash
+  netstat -tuln   # list listening TCP/UDP ports (numeric)
+  ss -tulwn       # same, more verbose
   ```
 
-<!-- end list -->  
 
-――――――――――――――――――――
+###  Hands-On Exercises
 
-12. Hands-On Exercises
+---
 
-――――――――――――――――――――
+ **Getting Help**
+   **Objective:** Compare different help systems (man pages, built-in `--help`, and community-driven tldr) to understand their output formats and uses.
+   *Description:* Capture the first lines of documentation from three sources for comparison.
 
-1. **Prompt Customization**
+   **Task:**
 
-   * **Task:** Add `export PS1="\u@\h [\t] \$ "` to your `~/.bashrc`, then `source ~/.bashrc`.
-   * **Validate:**
+   ```bash
+   man ls        | head -n2 > help_ls.txt
+   ls --help     | head -n2 > help_ls2.txt
+   sudo dnf install -y tldr && tldr tar | head -n5 > help_tldr_tar.txt
+   ```
 
-     ```bash
-     echo $PS1 | grep -q '\\u@\\h \\[\\t\\] \\$' && echo "Prompt OK"
-     ```
+   **Validate:**
 
-2. **Getting Help**
+   ```bash
+   wc -l help_ls.txt help_ls2.txt help_tldr_tar.txt
+   # Expect: 2  2  5
+   ```
 
-   * **Task:**
+ **Package Management (DNF)**
+   **Objective:** Gain hands-on experience searching for, installing, listing, and removing RPM packages via DNF, and learn how to verify package state.
+   *Description:* Install and remove `nano`, install `git`, capture the installed-package list, then confirm each package’s status.
 
-     1. `man ls | head -n2 > help_ls.txt`
-     2. `ls --help | head -n2 > help_ls2.txt`
-     3. `sudo dnf install -y tldr && tldr tar | head -n5 > help_tldr_tar.txt`
-   * **Validate:**
+   **Task:**
 
-     ```bash
-     wc -l help_ls.txt help_ls2.txt help_tldr_tar.txt  
-     # Expect 2, 2, 5
-     ```
+   ```bash
+   dnf search nano
+   sudo dnf install -y nano git
+   dnf list installed | grep -E 'nano|git' > pkg_list.txt
+   sudo dnf remove -y nano
+   ```
 
-3. **Package Management (DNF)**
+   **Validate:**
 
-   * **Task:**
+   ```bash
+   grep -q git pkg_list.txt && echo "git OK"
+   grep -q nano pkg_list.txt && echo "nano installed"
+   dnf list installed | grep -q nano || echo "nano removed"
+   ```
 
-     1. `dnf search nano`
-     2. `sudo dnf install -y nano git`
-     3. `dnf list installed | grep -E 'nano|git' > pkg_list.txt`
-     4. `sudo dnf remove -y nano`
-   * **Validate:**
+ **Basic Navigation & File Operations**
+   **Objective:** Practice creating nested directories, and using copy, move, and remove operations to manipulate files in a project scaffold.
+   *Description:* Build a standard project structure and move a README through copy, rename, and deletion steps.
 
-     ```bash
-     grep -q git pkg_list.txt && echo "git OK"  
-     grep -q nano pkg_list.txt && echo "nano installed"  
-     dnf list installed | grep -q nano || echo "nano removed"
-     ```
+   **Task:**
 
-4. **Basic Navigation & File Ops**
+   ```bash
+   mkdir -p project/{src,docs,tests}
+   cd project
+   touch README.md
+   cp README.md docs/
+   mv docs/README.md docs/INTRO.md
+   rm docs/INTRO.md
+   ```
 
-   * **Task:**
+   **Validate:**
 
-     ```bash
-     mkdir -p project/{src,docs,tests}
-     cd project
-     touch README.md
-     cp README.md docs/
-     mv docs/README.md docs/INTRO.md
-     rm docs/INTRO.md
-     ```
-   * **Validate:**
+   ```bash
+   tree project  # Should show only src/ docs/ tests/
+   ```
 
-     ```bash
-     tree project  # only src/ docs/ tests/
-     ```
+ **Vim Practice**
+   **Objective:** Familiarize yourself with basic Vim modes: insert, normal, deletion, find-and-replace, and saving/exiting.
+   *Description:* Use Vim to insert text, delete a line, globally replace a word, then save and quit.
 
-5. **Vim Practice**
+   **Task:**
 
-   * **Task:**
+   ```bash
+   touch vim_practice.txt
+   vim vim_practice.txt
+   # In Vim:
+   #  1) Press i, type three lines
+   #  2) Press <Esc>, move to line 2, type dd
+   #  3) Enter :%s/Vim/VIM/g, then :wq
+   ```
 
-     ```bash
-     touch vim_practice.txt
-     vim vim_practice.txt
-     ```
+   **Validate:**
 
-     In Vim:
+   ```bash
+   grep -q 'Line one: Hello VIM!' vim_practice.txt && echo "Vim OK"
+   ```
 
-     * `i` → type three lines
-     * `Esc` then `dd` on line 2
-     * `:%s/Vim/VIM/g`
-     * `:wq`
-   * **Validate:**
+ **Working with File Content**
+   **Objective:** Generate sample text data, practice viewing subsets with `head`/`tail`, and locate a specific line with `grep -n`.
+   *Description:* Create a 5-line file, inspect its beginning and end, and confirm you can pinpoint “Line 3.”
 
-     ```bash
-     grep -q 'Line one: Hello VIM!' vim_practice.txt && echo "Vim OK"
-     ```
+   **Task:**
 
-6. **Working with File Content**
+   ```bash
+   cd project/src
+   for i in {1..5}; do echo "Line $i" >> sample.txt; done
+   head -n3 sample.txt
+   tail -n2 sample.txt
+   grep -n "Line 3" sample.txt
+   ```
 
-   * **Task:**
+   **Validate:**
 
-     ```bash
-     cd project/src
-     for i in {1..5}; do echo "Line $i" >> sample.txt; done
-     head -n3 sample.txt
-     tail -n2 sample.txt
-     grep -n "Line 3" sample.txt
-     ```
-   * **Validate:**
+   ```bash
+   grep -q '^3:Line 3' sample.txt && echo "Content OK"
+   ```
 
-     ```bash
-     grep -q '^3:Line 3' sample.txt && echo "Content OK"
-     ```
+ **Permissions & Ownership**
+   **Objective:** Understand Unix file permissions by making a script executable only by its owner, and verify the permission bits.
+   *Description:* Create a `run.sh` script, inspect its default permissions, tighten them, and check the result.
 
-7. **Permissions & Ownership**
+   **Task:**
 
-   * **Task:**
+   ```bash
+   echo 'echo Hello' > project/src/run.sh
+   ls -l project/src/run.sh
+   chmod u+x,go-rwx project/src/run.sh
+   ```
 
-     ```bash
-     echo 'echo Hello' > project/src/run.sh
-     ls -l project/src/run.sh
-     chmod u+x,go-rwx project/src/run.sh
-     ```
-   * **Validate:**
+   **Validate:**
 
-     ```bash
-     ls -l project/src/run.sh | grep -q '^-.rwx' && echo "Perms OK"
-     ```
+   ```bash
+   ls -l project/src/run.sh | grep -q '^-.rwx' && echo "Perms OK"
+   ```
 
-8. **Process Management**
+ **Process Management**
+   **Objective:** Launch background jobs, capture and inspect their PIDs, and learn how to terminate them cleanly.
+   *Description:* Run `sleep` in the background, confirm it’s alive via `ps`, then kill it using its PID.
 
-   * **Task:**
+   **Task:**
 
-     ```bash
-     sleep 120 & echo $! > sleep.pid
-     ps x | grep '[s]leep'
-     ps aux | grep '[s]leep'
-     kill "$(cat sleep.pid)"
-     ```
-   * **Validate:**
+   ```bash
+   sleep 120 & echo $! > sleep.pid
+   ps x | grep '[s]leep'
+   ps aux | grep '[s]leep'
+   kill "$(cat sleep.pid)"
+   ```
 
-     ```bash
-     ps aux | grep sleep | grep -v grep || echo "Process gone"
-     ```
+   **Validate:**
 
-9. **Useful Utilities: `find` & `tar`**
+   ```bash
+   ps aux | grep sleep | grep -v grep || echo "Process gone"
+   ```
 
-   * **Task:**
+ **Useful Utilities: find & tar**
+   **Objective:** Combine `find` with `tar` to archive and extract sets of files, reinforcing directory-and-path handling.
+   *Description:* Locate all `.log` files, archive them into a compressed tarball, then unpack them into a new folder.
 
-     ```bash
-     mkdir -p project/tests
-     touch project/tests/{a.log,b.log,c.log}
-     find project/tests -name '*.log' > logs.txt
-     tar -czf project/tests/logs.tar.gz -C project/tests *.log
-     mkdir project/tests/extracted
-     tar -xzf project/tests/logs.tar.gz -C project/tests/extracted
-     ```
-   * **Validate:**
+   **Task:**
 
-     ```bash
-     test -f project/tests/logs.tar.gz && echo "Archive OK"
-     ls project/tests/extracted | grep -q 'a.log' && echo "Extract OK"
-     ```
+   ```bash
+   mkdir -p project/tests
+   touch project/tests/{a.log,b.log,c.log}
+   find project/tests -name '*.log' > logs.txt
+   tar -czf project/tests/logs.tar.gz -C project/tests *.log
+   mkdir project/tests/extracted
+   tar -xzf project/tests/logs.tar.gz -C project/tests/extracted
+   ```
 
-10. **Basic Networking**
+   **Validate:**
 
-    * **Task:**
+   ```bash
+   test -f project/tests/logs.tar.gz && echo "Archive OK"
+   ls project/tests/extracted | grep -q 'a.log' && echo "Extract OK"
+   ```
 
-      ```bash
-      ping -c1 google.com
-      ssh localhost exit
-      scp project/src/sample.txt project/src/sample_copy.txt
-      ```
-    * **Validate:**
+ **Basic Networking**
+    **Objective:** Verify basic network connectivity, practice SSH to localhost (loopback), and use SCP for secure file copy.
+    *Description:* Ping an external host, open/close an SSH session on localhost, then transfer a file via SCP.
 
-      ```bash
-      test -f project/src/sample_copy.txt && echo "SCP OK"
-      ```
+    **Task:**
 
-11. **Shell Scripting**
+    ```bash
+    ping -c1 google.com
+    ssh localhost exit
+    scp project/src/sample.txt project/src/sample_copy.txt .
+    ```
 
-    * **Task:**
+    **Validate:**
 
-      ```bash
-      cat > project/run_all.sh << 'EOF'
-      #!/bin/bash
-      echo "Starting Tests"
-      cd project/src && bash run.sh
-      echo "Done"
-      EOF
-      chmod +x project/run_all.sh
-      project/run_all.sh
-      ```
-    * **Validate:**
+    ```bash
+    test -f project/src/sample_copy.txt && echo "SCP OK"
+    ```
 
-      ```bash
-      project/run_all.sh | grep -q Hello && echo "Script OK"
-      ```
+ **Shell Scripting**
+    **Objective:** Build a reusable Bash script that orchestrates multiple commands, then execute it to observe end-to-end flow.
+    *Description:* Write `run_all.sh` to call your `run.sh` test script, make it executable, and run it.
 
-**Task 1:**
-**Objective:** Install EPICS Base on your Linux system. This will require independent research to identify the correct commands and procedures for your specific Linux distribution.
+    **Task:**
+
+    ```bash
+    cat > project/run_all.sh << 'EOF'
+    #!/bin/bash
+    echo "Starting Tests"
+    cd project/src && bash run.sh
+    echo "Done"
+    EOF
+    chmod +x project/run_all.sh
+    project/run_all.sh
+    ```
+
+    **Validate:**
+
+    ```bash
+    project/run_all.sh | grep -q Hello && echo "Script OK"
+    ```
+
+---
+
+
+
+
+
+## Task : Install EPICS Base on your Linux system
+
+**Objective:** Install EPICS Base on your Linux system. This requires researching the correct commands and procedures for your specific Linux distribution.
 
 **Steps:**
 
 1. **Research Prerequisites:**
 
-   * Research the necessary system packages and development tools required to compile EPICS Base (e.g., C/C++ compilers, `make`, Perl, and development libraries such as readline).
-   * Install these dependencies using your distribution’s package manager (`dnf` for Rocky/RHEL-based systems, `apt` for Debian/Ubuntu systems). Use `sudo` where necessary.
+   * Identify the system packages and development tools needed to compile EPICS Base. These typically include C/C++ compilers, `make`, `perl`, and specific development libraries (e.g., `readline`).
+   * Install these dependencies using your distribution’s package manager (`dnf` for Rocky Linux/RHEL-based systems, `apt` for Debian/Ubuntu). Use `sudo` as needed.
 2. **Obtain EPICS Base Source Code:**
 
-   * Find the official source code repository or download link for EPICS Base.
+   * Find the official EPICS Base source repository or download link.
    * Download or clone the source code into a suitable directory in your home folder (e.g., `~/EPICS`).
 3. **Build EPICS Base:**
 
-   * Navigate into the downloaded EPICS Base directory.
-   * Initiate the build process (likely using `make`, possibly with specific options).
-   * Troubleshoot any errors—this may involve installing additional dependencies or adjusting configuration files.
+   * Navigate into the EPICS Base directory you downloaded.
+   * Start the build process (usually by running `make` or `gnumake`, possibly with certain options). For example:
+
+     ```bash
+     make
+     ```
+   * Watch for error messages. If there are missing dependencies or configuration issues, install additional packages or adjust settings as needed.
 4. **Configure Environment Variables:**
 
-   * After a successful build, set environment variables (`EPICS_BASE`, `EPICS_HOST_ARCH`) and add EPICS executables to your `PATH`.
-   * Permanently add these to your shell environment by editing `~/.bashrc` or `~/.profile`.
-   * Apply changes without logging out using `source`.
+   * After building successfully, set environment variables: `EPICS_BASE`, `EPICS_HOST_ARCH`, and add the EPICS `bin` directory to your `PATH`.
+   * Learn how to make these changes permanent (for example, by editing `~/.bashrc` or `~/.profile` so that the variables are set each time you open a terminal).
+   * Apply the changes immediately in your current session with the `source` command (e.g., `source ~/.bashrc`).
 5. **Test the Installation:**
 
-   * Run `softIoc` from your terminal. A successful run shows an `epics>` prompt.
-   * Exit the prompt (usually `Ctrl+C` or `exit`).
+   * Run the `softIoc` command, which is a basic EPICS I/O controller.
+   * If EPICS is installed correctly, you should see an `epics>` prompt.
+   * Exit the `softIoc` prompt (usually by pressing `Ctrl+C` or typing `exit`).
 
 **Evaluation:**
 
-* Can you run `softIoc` from any terminal after setting up your environment variables?
+* Can you successfully run `softIoc` from any terminal after setting up your environment variables?
 * Are all necessary files and directories created by the build process present in your EPICS installation path?
