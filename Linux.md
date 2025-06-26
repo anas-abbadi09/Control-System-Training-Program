@@ -3,13 +3,26 @@
 
 ## 1. Introduction to the Linux Command Line
 
-### First, Why Linux?
+### Why Learn Linux?
 
-* Runs 90 % of web servers, 75 % of smartphones (Android), nearly all supercomputers.
-* Ubiquitous in **cloud** (AWS/Azure), **embedded systems** (Raspberry Pi), **HPC**, **cybersecurity**.
-* Core skill for software dev, DevOps, sysadmin, security.
+* **It Powers the Internet!**
+  Over **96% of the top 1 million web servers** (think Google, Amazon, Facebook) run Linux—making it the backbone of the web.
 
-### And, Why CLI?
+* **Dominates the Cloud & Servers.**
+  About **90% of cloud infrastructures** (AWS, Azure, Google Cloud) and **all of the top 500 supercomputers** rely on Linux.
+
+* **Runs on Most Smartphones.**
+  Android, which is built on the Linux kernel, controls over **70% of phones worldwide**, meaning billions of devices use it daily.
+
+* **Everywhere from Smart Devices to Supercomputers.**
+  Linux is also found in industries like cybersecurity, embedded systems (e.g., routers and Raspberry Pi), high-performance computing, and IoT.
+
+* **A Must‑Have Skill.**
+  Whether you’re a software engineer, DevOps professional, system administrator, or cybersecurity expert, knowing how to use Linux is essential—it’s literally what runs the world’s infrastructure.
+
+**In short:** Linux isn’t just *another* operating system—it’s the foundation of almost everything online, from websites to smart gadgets. Learning it gives you the keys to work with servers, cloud systems, and devices at scale.
+
+### Why Command Line?
 
 * **Automation & Scripting:** Save time with shell scripts.
 * **Power & Flexibility:** Configure and troubleshoot beyond GUIs.
