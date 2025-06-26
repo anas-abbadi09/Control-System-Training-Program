@@ -115,34 +115,44 @@ Master these essentials—they're the foundation of everything:
    ```
 
 
+
+
 ## 2. Structure of a Command
 
-The basic syntax of a command is:
+Every shell command follows:
 
-```
+```bash
 command [options] [arguments]
 ```
 
-* **command:** Program name (e.g., `ls`, `cp`).
-* **options:** Modify behavior (e.g., `-l`, `--recursive`).
-* **arguments:** Targets (files, directories, patterns).
+* **command**
+  The program you run (e.g. `ls`, `cp`, `grep`, `zip`).
 
-**Example:**
+* **options**
+  Short flags (`-l`, `-r`, `v`, `-p`) that tweak behavior.
+
+* **arguments**
+  What you act on—files, directories, patterns, etc.
+
+
+### Example
 
 ```bash
 grep -rin "TODO" ~/projects
 ```
 
-This command searches recursively (`-r`) for the string "TODO" (case-insensitive, `-i`) in the `~/projects` directory, showing line numbers (`-n`).
+* `grep` → the program
+* `-r` → recursive
+* `-i` → ignore case
+* `-n` → show line numbers
+* `"TODO"` → search term
+* `~/projects` → where to look
 
-### Homework:
+**Sample output**:
 
-1. Examine the following command and list which part is the command name, which are the options, and which are the arguments:
-
-`tar -czvf site_backup.tar.gz /var/www/site`
-
-2. Write a single shell command that copies all `.txt` files from a directory named `reports/` into a directory named `old_reports/`, shows each filename as it copies, and preserves file timestamps.
-
+```bash
+/home/ahmad/projects/main.c:42:// TODO: handle edge case when input is zero
+```
 
 ## 3. Opening a Terminal and the Prompt
 
@@ -189,15 +199,36 @@ sudo dnf install -y tldr
 tldr chmod
 ```
 
-### Homework:
+**Homework**:  
+Investigate the `grep` command using these help methods:  
 
-**Investigate `curl`.**
+1. **Quick Reference**  
+```bash
+grep --help | head -5
+```  
+*What to note*: First usage line and one option description  
 
-Run `curl --help`, `man curl` (just the first two lines), and `info curl` (just the first two entries in its menu). For each tool, note what type of information it gives you.
+2. **Manual Summary**  
+```bash
+whatis grep
+man grep | head -3
+```  
+*What to note*: One-line summary and brief description  
 
-**Find an alternative to `grep`.**
+3. **Practical Examples**  
+```bash
+tldr grep 2>/dev/null || echo "Example: grep 'error' /var/log/syslog"
+```  
+*What to note*: One example usage  
 
-Use `apropos "search text"` to discover a command other than `grep` that can search inside files. Then run `whatis` on the suggestion and record its one-line description.
+
+**Email submission**:  
+- **Subject**: `HW4 – Help Tools – [Your Name]`  
+- **Body**:  
+  1. Key points from `--help`  
+  2. Description from `whatis` and `man`  
+  3. One practical example
+
 
 ## 5. Package Management with DNF
 
@@ -226,28 +257,44 @@ DNF handles software installation, updates, and removal while resolving dependen
 * **Remove Unused Dependencies:** `sudo dnf autoremove`.
 * **Clean Caches:** `sudo dnf clean all`.
 
-### Exercise: Package Management
-```bash
-# Task 1: Search for htop
-dnf search htop
+**Homework**:  
+Perform these tasks **in your terminal** and report outputs:  
 
-# Task 2: Install and run htop
-sudo dnf install -y htop
-htop
+1. **Search for Packages**  
+   ```bash
+   dnf search nano
+   ```  
+   *What to note*: First package name containing "nano"  
 
-# Task 3: Remove htop
-sudo dnf remove -y htop
-```
+2. **Simulate Installation**  
+   ```bash
+   sudo dnf install --assumeno nano
+   ```  
+   *What to note*: Number of packages marked for installation  
 
-### Homework:
+3. **Verify & Install**  
+   ```bash
+   dnf list installed nano || sudo dnf install -y nano
+   nano --version
+   ```  
+   *What to note*: Nano version number  
 
-**Simulate installing and listing.**
+4. **Simulate Removal**  
+   ```bash
+   sudo dnf remove --assumeno nano
+   ```  
+   *What to note*: Number of packages marked for removal  
 
-Without actually installing, write the sequence of commands you would use to install two packages—vlc and ncdu—and then list all installed packages whose names start with “n”.
+**Email submission**:  
+- **Subject**: `HW5 – Package Practice – [Your Name]`  
+- **Body**:  
+  1. First matching package from Task 1  
+  2. Dependency count from Task 2  
+  3. Version output from Task 3  
+  4. Removal count from Task 4
+ 
 
-**Clean up and verify.**
 
-Write the commands to remove a package named tinymembench, automatically remove any now-unused dependencies, clean all cached data, and finally confirm that tinymembench is no longer installed.
 
 ## 6. Basic Navigation and File Management  
 Master these essential commands to navigate and organize your Linux system like a pro:  
@@ -310,23 +357,47 @@ rm myproject/docs/INSTRUCTIONS.txt
 ```
 
 
-### Homework:
+**Homework**:  
+Perform these tasks **in your terminal** and report outputs:  
 
-**Explore and Inspect**
+1. **Home Directory Check**  
+   ```bash
+   pwd
+   ```
+   *What to note*: Your starting directory path  
 
-* List the **full pathname** of your current home directory.
-* Display **all files** in `~/logs` in **long format**, sorted by **modification time (newest first)**.
-* Change into the **parent directory** of `~/logs`.
+2. **Create Archive Structure**  
+   ```bash
+   mkdir -p ~/Documents/conf_2025/slides
+   ```
 
-**Create, Copy, Rename, and Remove**
+3. **Generate Sample Files**  
+   ```bash
+   touch ~/Documents/conf_2025/slides/slide{1..3}.pdf
+   ```
 
-Within your working directory (`~/projects`):
+4. **Copy & Rename Practice**  
+   ```bash
+   cp -v ~/Documents/conf_2025/slides/slide1.pdf ~/Documents/conf_2025/slides/opening_keynote.pdf
+   ```
 
-* Create nested folders: `archive/2025_June`.
-* Inside `archive/2025_June`, create an empty file named `notes.md`.
-* Copy all **`.conf` files** from `~/config` into `archive/2025_June`, **preserving metadata**.
-* Rename one of the copied files to **append `.bak`**.
-* **Interactively delete** an existing empty directory called `temp_test`.
+5. **Create Notes File**  
+   ```bash
+   touch ~/Documents/conf_2025/qa_notes.txt
+   ```
+
+6. **Verify Results**  
+   ```bash
+   ls -l ~/Documents/conf_2025
+   ls ~/Documents/conf_2025/slides
+   ```
+
+**Email submission**:  
+- **Subject**: `HW6 – File Practice – [Your Name]`  
+- **Body**:  
+  1. Output of `pwd` (Task 1)  
+  2. Output of first `ls` (Task 6) showing `conf_2025` contents  
+  3. Output of second `ls` (Task 6) showing `slides` contents 
 
 
 ## 7. Working with File Content  
