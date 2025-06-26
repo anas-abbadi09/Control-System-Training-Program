@@ -21,9 +21,9 @@
 
 ### GUI Familiarity Map
 
-| Windows         | Linux (e.g. Ubuntu/Fedora) |
+| Windows         | Linux (e.g. Ubuntu/Rocky) |
 | --------------- | -------------------------- |
-| File Explorer   | Files (Nautilus/Dolphin)   |
+| File Explorer   | Files (Dolphin)   |
 | Start Menu      | Activities/Menu            |
 | Taskbar         | Panel or Dock              |
 | Control Panel   | Settings                   |
@@ -46,21 +46,38 @@
   * `$` = regular user (use `#` for root)
 
 
-### Five Essential Commands
+### First 5 Commands: Your Linux Toolkit  
+Master these essentials—they're the foundation of everything:  
 
-```bash
-ls                 # List files/folders
-cd <dir>           # Change directory
-mkdir <name>       # Create folder
-mv <src> <dest>    # Move/rename (cp to copy)
-sudo dnf install X # Install package (use apt on Debian/Ubuntu)
-```
+1. **`ls`** → *"What's here?"*  
+   ```bash
+   ls  # Lists files in current folder
+   ```  
+2. **`cd`** → *"Navigate to folder"*  
+   ```bash
+   cd Documents  # Enters your Documents folder
+   ```  
+3. **`mkdir`** → *"Create folder"*  
+   ```bash
+   mkdir project_alpha  # Makes new folder
+   ```  
+4. **`mv`** → *"Move/rename files"*  
+   ```bash
+   mv draft.txt final_report.txt  # Renames file
+   ```  
+5. **Install Software** → *"Linux's App Store"*  
+   ```bash
+   sudo dnf install htop  # Installs system monitor (Fedora/Rocky)
+   ```  
+   *Note:* `sudo` grants temporary admin rights  
+
 
 ### Quick 10-Minute Quest
 
 1. **Folder Practice**
 
    ```bash
+   cd
    ls
    cd Documents
    mkdir linux_lab
@@ -69,7 +86,7 @@ sudo dnf install X # Install package (use apt on Debian/Ubuntu)
 2. **Install & Play**
 
    ```bash
-   sudo apt install ninvaders    # Or: sudo dnf install ninvaders
+   sudo dnf install ninvaders    # Install ninvaders
    ninvaders                     # Arrow keys to play; Ctrl+C to exit
    ```
 
@@ -183,41 +200,51 @@ Without actually installing, write the sequence of commands you would use to ins
 
 Write the commands to remove a package named tinymembench, automatically remove any now-unused dependencies, clean all cached data, and finally confirm that tinymembench is no longer installed.
 
-## 6. Basic Navigation and File Management
+## 6. Basic Navigation and File Management  
+Master these essential commands to navigate and organize your Linux system like a pro:  
 
-Use the following commands to move around and manage files/directories:
-
-```bash
-# Show current directory
-pwd
-# List files (long format, human-readable sizes, sort by size reverse)
-ls -lhSr
-
-# Change directory
-cd /path/to/dir
-cd ..      # go to parent directory
-cd -       # go to previous directory
-cd        # go to home directory
-
-# Make directories
-mkdir -p parent/child   # nested directories in one command
-
-# Create/update file timestamp (or create an empty file)
-touch file.txt
-
-# Copy files/directories
-cp -a src/ dest/        # archive mode: preserves perms, timestamps, symlinks
-
-# Move or rename
-mv file.txt ../other/
-
-# Remove files/directories
-rm -i file.txt          # interactive (safer delete, prompts for confirmation)
-rmdir empty-dir        # remove empty directory
-rm -rf dir-to-delete    # DANGER: force remove directory and contents (no undo)
+#### Core Navigation  
+```bash  
+pwd                     # Show your current directory (Where am I?)  
+ls -lh                  # List files (human-readable sizes)  
+cd ~/Documents          # Jump to Documents  
+cd ..                   # Move UP one level  
+cd -                    # Return to previous directory  
+cd                      # Go home (~ shortcut)  
 ```
 
-* ⚡ **Bonus Tool: Ranger (Terminal File Manager):** Use `ranger` for a visual, two- or three-pane interface in the terminal. It lets you browse directories and preview files with keyboard shortcuts, similar to a GUI file manager. (Install it first with `sudo dnf install ranger` on Rocky Linux, then run `ranger`.)
+#### Directory Operations  
+```bash  
+mkdir project-alpha      # Create single folder  
+mkdir -p lab/{data,code} # Create nested folders in one command  
+```
+
+#### File Operations  
+```bash  
+touch experiment.txt    # Create empty file OR update timestamp  
+cp -a template.cfg backup/ # Copy with permissions/timestamps  
+mv draft.txt final_report.txt # Rename file  
+mv data/ ~/archive/     # Move folder  
+```
+
+#### ⚠️ Careful With These!  
+```bash  
+rm -i temp.log          # Interactive delete (asks confirmation)  
+rmdir empty_folder      # Remove EMPTY directory (safe)  
+rm -rf old_builds/      # ⚠️ DANGER! Force-deletes folder + contents  
+```  
+> **Critical Safety Note:**  
+> `rm -rf` is irreversible. Double-check paths before running!  
+> *(Tip: Use `ls` before `rm` to verify targets)*  
+
+#### ⚡ Bonus Tool: **Ranger**  
+A visual file manager for your terminal:  
+```bash  
+sudo dnf install ranger  # Install  
+ranger                   # Launch  
+```  
+Navigate with **arrow keys**, preview files with **space**, quit with **Q**  
+*(Like Windows Explorer but keyboard-driven!)* 
 
 ### Homework:
 
@@ -238,47 +265,78 @@ Within your working directory (`~/projects`):
 * **Interactively delete** an existing empty directory called `temp_test`.
 
 
-## 7. Working with File Content
+## 7. Working with File Content  
 
-View and search file contents with these commands:
+#### Viewing Files Safely  
+```bash  
+cat short.txt          # Show SMALL files (⚠️ avoid on large files!)  
+less /var/log/messages # Scroll through files safely (↑/↓ arrows, Q to quit)  
+```  
+> **Pro Tip:** Always use `less` for large files - it won't flood your terminal!
 
-```bash
-# View entire file
-cat file.txt
-
-# Page through long files
-less /var/log/messages
-
-# View first/last lines
-head -n5 file.txt      # first 5 lines
-tail -n20 file.txt     # last 20 lines
-
-# Follow a file (e.g., live log)
-tail -f /var/log/messages
-
-# Search text
-grep -Rin "error" ~/projects
+#### Inspecting File Headers & Footers  
+```bash  
+head -n 10 data.csv    # Show first 10 lines  
+tail -n 5 debug.log    # Show last 5 lines  
 ```
 
-### Homework:
+#### Real-Time Monitoring  
+```bash  
+tail -f /var/log/auth.log  # Watch new entries LIVE (Ctrl+C to stop)  
+```  
+Perfect for tracking server logs or live application output.
 
-**Task: Create a Command Script**
+#### Powerful Text Search  
+```bash  
+grep -i "critical" ~/logs/*.txt  # Find "critical" (case-insensitive) in .txt files  
+grep -r "404" /var/www/          # Recursively search directories  
+```  
+**Key Flags:**  
+- `-i`: Case-insensitive  
+- `-r`/`-R`: Recursive search  
+- `-n`: Show line numbers  
+- `-v`: Invert match (exclude pattern)  
 
-In a script named `hw7_commands.sh`, write commands to:
+#### ⚠️ Critical Safety Notes  
+1. **Never** `cat` large files (>100 lines) - it can freeze your terminal  
+2. Use `less +F /path/to/log` for safer live viewing than `tail -f`  
+   (Press Ctrl+C → Q to exit cleanly)  
+3. Avoid `grep -r` on system directories like `/` - target specific folders  
 
-1. Display the first 7 lines of `/home/student/debug.log`.
-2. Page through the rest of that same file.
-3. Show the last 15 lines of `/home/student/debug.log`.
-4. Recursively search for the string "ALERT" (case-insensitive) in all `.conf` files under `/etc/myservice`.
-5. Monitor `/home/student/debug.log` for new entries until you interrupt it.
+### Homework: File Content Operations  
+**Objective:** Practice essential file viewing, extraction, and monitoring techniques  
 
-**Submission: Email**
+**Task: Create `hw7_commands.sh` Script**  
+Write commands to perform these operations:  
 
-- **Subject**: HW7 – File Content
-- **Attach**: `hw7_commands.sh`
-- **In the body**:
-  - Paste the output you saw for the `grep` search.
-  - Write one sentence summarizing what happened when you ran `tail -f`.
+```bash
+#!/bin/bash
+# HW7 Solution - File Operations
+
+# 1. Show first 7 lines of kernel log
+head -7 /var/log/kern.log
+
+# 2. Extract lines 8-50 from auth log
+sed -n '8,50p' /var/log/auth.log
+
+# 3. Display last 15 lines of syslog
+tail -15 /var/log/syslog
+
+# 4. Find "error" in common config files (case-insensitive)
+grep -Rin --include='*.conf' 'error' /etc
+
+# 5. Monitor kernel log for 30 seconds
+timeout 30 tail -f /var/log/kern.log
+```
+
+**Submission Requirements:**  
+- **Subject**: `HW7 – File Content - [Your Name]`  
+- **Attachment**: `hw7_commands.sh`  
+- **Email Body**:  
+  1. Paste one matching line from your `grep` search  
+  2. Complete: "During `tail -f`, I observed: ______"
+ 
+
 
 ## 8. Permissions and Ownership
 
