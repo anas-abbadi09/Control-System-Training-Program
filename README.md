@@ -34,6 +34,15 @@ grep -rin "TODO" ~/projects
 
 This command searches recursively (`-r`) for the string "TODO" (case-insensitive, `-i`) in the `~/projects` directory, showing line numbers (`-n`).
 
+### Homework:
+
+1. Examine the following command and list which part is the command name, which are the options, and which are the arguments:
+
+`tar -czvf site_backup.tar.gz /var/www/site`
+
+2. Write a single shell command that copies all `.txt` files from a directory named `reports/` into a directory named `old_reports/`, shows each filename as it copies, and preserves file timestamps.
+
+
 ## 3. Opening a Terminal and the Prompt
 
 A *terminal emulator* (often just called “Terminal”) is the software you use today to access the CLI. It simulates a physical console. Common terminal emulators include **Terminal** (GNOME), **Konsole** (KDE), and **xterm** (lightweight).
@@ -66,6 +75,17 @@ When you need help with a command, the CLI provides several tools:
 
 * `tldr <command>`: Practical examples and common use cases for a command. (Note: `tldr` is a separate tool and might need installation.)
 
+
+### Homework:
+
+**Investigate `curl`.**
+
+Run `curl --help`, `man curl` (just the first two lines), and `info curl` (just the first two entries in its menu). For each tool, note what type of information it gives you.
+
+**Find an alternative to `grep`.**
+
+Use `apropos "search text"` to discover a command other than `grep` that can search inside files. Then run `whatis` on the suggestion and record its one-line description.
+
 ## 5. Package Management with DNF
 
 Rocky Linux (a Red Hat-based distribution) uses the RPM package ecosystem. The core components are:
@@ -92,6 +112,16 @@ DNF handles software installation, updates, and removal while resolving dependen
 * **Reinstall:** `sudo dnf reinstall <package_name>`.
 * **Remove Unused Dependencies:** `sudo dnf autoremove`.
 * **Clean Caches:** `sudo dnf clean all`.
+
+### Homework:
+
+**Simulate installing and listing.**
+
+Without actually installing, write the sequence of commands you would use to install two packages—vlc and ncdu—and then list all installed packages whose names start with “n”.
+
+**Clean up and verify.**
+
+Write the commands to remove a package named tinymembench, automatically remove any now-unused dependencies, clean all cached data, and finally confirm that tinymembench is no longer installed.
 
 ## 6. Basic Navigation and File Management
 
@@ -129,6 +159,25 @@ rm -rf dir-to-delete    # DANGER: force remove directory and contents (no undo)
 
 * ⚡ **Bonus Tool: Ranger (Terminal File Manager):** Use `ranger` for a visual, two- or three-pane interface in the terminal. It lets you browse directories and preview files with keyboard shortcuts, similar to a GUI file manager. (Install it first with `sudo dnf install ranger` on Rocky Linux, then run `ranger`.)
 
+### Homework:
+
+**Explore and Inspect**
+
+* List the **full pathname** of your current home directory.
+* Display **all files** in `~/logs` in **long format**, sorted by **modification time (newest first)**.
+* Change into the **parent directory** of `~/logs`.
+
+**Create, Copy, Rename, and Remove**
+
+Within your working directory (`~/projects`):
+
+* Create nested folders: `archive/2025_June`.
+* Inside `archive/2025_June`, create an empty file named `notes.md`.
+* Copy all **`.conf` files** from `~/config` into `archive/2025_June`, **preserving metadata**.
+* Rename one of the copied files to **append `.bak`**.
+* **Interactively delete** an existing empty directory called `temp_test`.
+
+
 ## 7. Working with File Content
 
 View and search file contents with these commands:
@@ -151,7 +200,25 @@ tail -f /var/log/messages
 grep -Rin "error" ~/projects
 ```
 
-*Consider faster alternatives like `ripgrep` (`rg`) for searching large codebases.*
+### Homework:
+
+**Task: Create a Command Script**
+
+In a script named `hw7_commands.sh`, write commands to:
+
+1. Display the first 7 lines of `/home/student/debug.log`.
+2. Page through the rest of that same file.
+3. Show the last 15 lines of `/home/student/debug.log`.
+4. Recursively search for the string "ALERT" (case-insensitive) in all `.conf` files under `/etc/myservice`.
+5. Monitor `/home/student/debug.log` for new entries until you interrupt it.
+
+**Submission: Email**
+
+- **Subject**: HW7 – File Content
+- **Attach**: `hw7_commands.sh`
+- **In the body**:
+  - Paste the output you saw for the `grep` search.
+  - Write one sentence summarizing what happened when you ran `tail -f`.
 
 ## 8. Permissions and Ownership
 
@@ -214,7 +281,40 @@ sudo chown alice:developers project/   # owner=alice, group=developers
 sudo chown -R bob: project_data/       # owner=bob for project_data/ and all inside; group=bob's group
 ```
 
-> I understand. I'll simplify the "Process Management" section, keeping only the most essential information and commands for a beginner in a university Linux basics course.
+
+## Homework
+
+### Interpret permissions
+
+Imagine you run `ls -l` and see:
+`-rwxr--r-- 1 carol analysts 2048 Jul 10 09:15 secret_notes.txt`
+
+**Task 1:** In an email, state the file type, and list exactly what permissions Carol (the owner), the group, and others have.
+
+---
+
+### Change permissions and ownership
+
+**Task 2:** Create a script named `hw8_commands.sh` that:
+
+* Sets `project_alpha/` and everything inside to be **readable and writable** by **owner and group**, but **inaccessible** to others.
+* Makes the file `project_alpha/config.yml` **executable by owner only**.
+* Changes the **owner** of `project_alpha/` and its contents to **user `dave`** and **group `qa`**.
+
+---
+
+### Email Submission
+
+**Subject:** HW8 – Permissions & Ownership
+
+**Attach:** `hw8_commands.sh`
+
+**Email Body:**
+
+* For **task 1**, provide a **one-sentence answer** describing the permissions.
+* For **task 2**, write a **two-sentence summary** of what each command in your script does.
+
+
 
 ## 9. Process Management
 
@@ -282,6 +382,34 @@ sudo dnf install htop
 
 Then run `htop`.
 
+
+## Homework
+
+### Process listing and control
+
+In a script named `hw9_commands.sh`, write commands to:
+
+* Save a full system process snapshot to `all_procs.txt`.
+* Show only your user's processes.
+* Launch a background `sleep 200` process.
+* Find and kill that `sleep` process by its PID.
+
+---
+
+### Email submission
+
+**Subject:** HW9 – Process Management
+
+**Attach:**
+* `hw9_commands.sh` (your script)
+* `all_procs.txt` (the snapshot from step 1)
+
+**In the body:**
+State the PID you identified and killed.
+
+
+
+
 ## 10. Useful Utilities
 
 Here are some handy commands and utilities:
@@ -329,6 +457,36 @@ Vim is a powerful terminal-based text editor, available by default on most Unix-
 4. **Exit Vim:** Press `<Esc>`, type `:wq`, and press Enter (save and quit).
 
 **Quick Tip:** If you accidentally open Vim and don’t know how to exit: press `<Esc>`, then type `:q!` and press Enter (force quit without saving).
+
+
+## Homework
+
+### Archive and compress
+
+Create a script named `hw10_archive.sh` that:
+
+* Finds every `.tmp` file under `~/workdir` and compresses it in place with `gzip`.
+* Creates an XZ-compressed tarball `~/backups/workdir_backup.tar.xz` containing the entire `~/workdir` directory.
+
+### Quick Vim edit
+
+In a file at `~/workdir/notes.txt`, insert the line `# Workdir Backup Completed` at the very top, then save and exit Vim, using only Normal, Insert, and Command modes (no mouse).
+
+---
+
+### Email submission
+
+**Subject:** HW10 – Utilities & Vim
+
+**Attach:**
+* `hw10_archive.sh`
+* A plain text file `vim_steps.txt` listing the exact keystrokes you used in Vim.
+
+**In the body:**
+* Paste the output line from `tar -tjf ~/backups/workdir_backup.tar.xz | head -1`.
+* One sentence confirming that the first line of `notes.txt` now reads your header.
+
+
 
 ## 11. Basic Networking Commands
 
@@ -381,6 +539,35 @@ SSH is a secure way to connect to and manage Linux servers remotely. You can exe
   netstat -tuln   # list listening TCP/UDP ports (numeric)
   ss -tulwn       # same, more verbose
   ```
+
+
+
+## Homework
+
+### Compose a networking script
+
+Create `hw11_commands.sh` containing commands to:
+
+* SSH into `devops@myserver.example.com` on port `2223` and print the remote hostname.
+* Ping `example.org` exactly 4 times, saving the output to `ping_output.txt`.
+* Securely copy the local file `/var/log/custom.log` to `devops@myserver.example.com:~/remote_logs/`.
+* List all listening TCP ports numerically using `ss`.
+
+---
+
+### Email submission
+
+**Subject:** HW11 – Networking Commands
+
+**Attach:**
+* `hw11_commands.sh`
+* `ping_output.txt`
+
+**In the body:**
+* Paste the first line of `ping_output.txt`.
+* One sentence describing what you saw when you ran `ss -tln`.
+
+
 
 
 ###  Hands-On Exercises
@@ -590,8 +777,6 @@ SSH is a secure way to connect to and manage Linux servers remotely. You can exe
     ```
 
 ---
-
-
 
 
 
