@@ -3,21 +3,19 @@
 
 ## 1. Introduction to the Linux Command Line
 
-### Why the CLI Matters
+### First, Why Linux?
+
+* Runs 90 % of web servers, 75 % of smartphones (Android), nearly all supercomputers.
+* Ubiquitous in **cloud** (AWS/Azure), **embedded systems** (Raspberry Pi), **HPC**, **cybersecurity**.
+* Core skill for software dev, DevOps, sysadmin, security.
+
+### And, Why CLI?
 
 * **Automation & Scripting:** Save time with shell scripts.
 * **Power & Flexibility:** Configure and troubleshoot beyond GUIs.
 * **Efficiency:** One command replaces many clicks.
 * **Remote Access:** SSH into servers.
 * **Lightweight & Consistent:** Same tools across distros; minimal resources.
-
-
-### Why Linux Matters
-
-* Runs 90 % of web servers, 75 % of smartphones (Android), nearly all supercomputers.
-* Ubiquitous in **cloud** (AWS/Azure), **embedded systems** (Raspberry Pi), **HPC**, **cybersecurity**.
-* Core skill for software dev, DevOps, sysadmin, security.
-
 
 ### GUI Familiarity Map
 
@@ -31,7 +29,7 @@
 
 
 
-### Your Power Tool: Terminal
+### Terminal
 
 * **Open** the “Terminal” app.
 * Prompt:
@@ -46,7 +44,7 @@
   * `$` = regular user (use `#` for root)
 
 
-### First 5 Commands: Your Linux Toolkit  
+### First 5 Commands 
 Master these essentials—they're the foundation of everything:  
 
 1. **`ls`** → *"What's here?"*  
@@ -152,6 +150,18 @@ When you need help with a command, the CLI provides several tools:
 
 * `tldr <command>`: Practical examples and common use cases for a command. (Note: `tldr` is a separate tool and might need installation.)
 
+### Exercise: Getting Help
+```bash
+# Task 1: View man page for ls
+man ls | head -n5
+
+# Task 2: Get quick help for mkdir
+mkdir --help | grep -i "create"
+
+# Task 3: Install tldr & get examples for chmod
+sudo dnf install -y tldr
+tldr chmod
+```
 
 ### Homework:
 
@@ -189,6 +199,19 @@ DNF handles software installation, updates, and removal while resolving dependen
 * **Reinstall:** `sudo dnf reinstall <package_name>`.
 * **Remove Unused Dependencies:** `sudo dnf autoremove`.
 * **Clean Caches:** `sudo dnf clean all`.
+
+### Exercise: Package Management
+```bash
+# Task 1: Search for htop
+dnf search htop
+
+# Task 2: Install and run htop
+sudo dnf install -y htop
+htop
+
+# Task 3: Remove htop
+sudo dnf remove -y htop
+```
 
 ### Homework:
 
@@ -246,6 +269,21 @@ ranger                   # Launch
 Navigate with **arrow keys**, preview files with **space**, quit with **Q**  
 *(Like Windows Explorer but keyboard-driven!)* 
 
+### Exercise: File Operations
+```bash
+# Task 1: Create project structure
+mkdir -p myproject/{docs,src}
+touch myproject/README.txt
+
+# Task 2: Copy & rename
+cp myproject/README.txt myproject/docs/
+mv myproject/docs/README.txt myproject/docs/INSTRUCTIONS.txt
+
+# Task 3: Cleanup
+rm myproject/docs/INSTRUCTIONS.txt
+```
+
+
 ### Homework:
 
 **Explore and Inspect**
@@ -302,6 +340,19 @@ grep -r "404" /var/www/          # Recursively search directories
 2. Use `less +F /path/to/log` for safer live viewing than `tail -f`  
    (Press Ctrl+C → Q to exit cleanly)  
 3. Avoid `grep -r` on system directories like `/` - target specific folders  
+
+
+### Exercise: File Content
+```bash
+# Task 1: Create sample file
+echo -e "Line 1\nLine 2\nLine 3" > text.txt
+
+# Task 2: View first 2 lines
+head -n2 text.txt
+
+# Task 3: Find "Line 2"
+grep "Line 2" text.txt
+```
 
 ### Homework: File Content Operations  
 **Objective:** Practice essential file viewing, extraction, and monitoring techniques  
@@ -399,6 +450,17 @@ sudo chown alice:developers project/   # owner=alice, group=developers
 sudo chown -R bob: project_data/       # owner=bob for project_data/ and all inside; group=bob's group
 ```
 
+### Exercise: Permissions
+```bash
+# Task 1: Create script
+echo 'echo "Hello"' > myscript.sh
+
+# Task 2: Make executable
+chmod u+x myscript.sh
+
+# Task 3: Run script
+./myscript.sh
+```
 
 ## Homework
 
@@ -500,6 +562,17 @@ sudo dnf install htop
 
 Then run `htop`.
 
+### Exercise: Process Management
+```bash
+# Task 1: Start background sleep
+sleep 30 &
+
+# Task 2: Find process ID
+ps aux | grep sleep
+
+# Task 3: Stop process
+kill $!
+```
 
 ## Homework
 
@@ -576,6 +649,29 @@ Vim is a powerful terminal-based text editor, available by default on most Unix-
 
 **Quick Tip:** If you accidentally open Vim and don’t know how to exit: press `<Esc>`, then type `:q!` and press Enter (force quit without saving).
 
+### Exercise: Find & Archive
+```bash
+# Task 1: Create files
+touch file1.log file2.conf
+
+# Task 2: Find .log files
+find . -name "*.log"
+
+# Task 3: Create archive
+tar -czf archive.tar.gz file1.log
+```
+
+### Exercise: Scripting
+```bash
+# Task 1: Create script
+echo -e '#!/bin/bash\necho "Script works!"' > test.sh
+
+# Task 2: Make executable
+chmod +x test.sh
+
+# Task 3: Run script
+./test.sh
+```
 
 ## Homework
 
@@ -658,7 +754,17 @@ SSH is a secure way to connect to and manage Linux servers remotely. You can exe
   ss -tulwn       # same, more verbose
   ```
 
+### Exercise: Networking
+```bash
+# Task 1: Check connectivity
+ping -c1 localhost
 
+# Task 2: Local file copy
+cp file2.conf copy.conf
+
+# Task 3: Verify copy
+ls -l copy.conf
+```
 
 ## Homework
 
@@ -685,218 +791,7 @@ Create `hw11_commands.sh` containing commands to:
 * Paste the first line of `ping_output.txt`.
 * One sentence describing what you saw when you ran `ss -tln`.
 
-
-
-
-###  Hands-On Exercises
-
 ---
-
- **Getting Help**
-   **Objective:** Compare different help systems (man pages, built-in `--help`, and community-driven tldr) to understand their output formats and uses.
-   *Description:* Capture the first lines of documentation from three sources for comparison.
-
-   **Task:**
-
-   ```bash
-   man ls        | head -n2 > help_ls.txt
-   ls --help     | head -n2 > help_ls2.txt
-   sudo dnf install -y tldr && tldr tar | head -n5 > help_tldr_tar.txt
-   ```
-
-   **Validate:**
-
-   ```bash
-   wc -l help_ls.txt help_ls2.txt help_tldr_tar.txt
-   # Expect: 2  2  5
-   ```
-
- **Package Management (DNF)**
-   **Objective:** Gain hands-on experience searching for, installing, listing, and removing RPM packages via DNF, and learn how to verify package state.
-   *Description:* Install and remove `nano`, install `git`, capture the installed-package list, then confirm each package’s status.
-
-   **Task:**
-
-   ```bash
-   dnf search nano
-   sudo dnf install -y nano git
-   dnf list installed | grep -E 'nano|git' > pkg_list.txt
-   sudo dnf remove -y nano
-   ```
-
-   **Validate:**
-
-   ```bash
-   grep -q git pkg_list.txt && echo "git OK"
-   grep -q nano pkg_list.txt && echo "nano installed"
-   dnf list installed | grep -q nano || echo "nano removed"
-   ```
-
- **Basic Navigation & File Operations**
-   **Objective:** Practice creating nested directories, and using copy, move, and remove operations to manipulate files in a project scaffold.
-   *Description:* Build a standard project structure and move a README through copy, rename, and deletion steps.
-
-   **Task:**
-
-   ```bash
-   mkdir -p project/{src,docs,tests}
-   cd project
-   touch README.md
-   cp README.md docs/
-   mv docs/README.md docs/INTRO.md
-   rm docs/INTRO.md
-   ```
-
-   **Validate:**
-
-   ```bash
-   tree project  # Should show only src/ docs/ tests/
-   ```
-
- **Vim Practice**
-   **Objective:** Familiarize yourself with basic Vim modes: insert, normal, deletion, find-and-replace, and saving/exiting.
-   *Description:* Use Vim to insert text, delete a line, globally replace a word, then save and quit.
-
-   **Task:**
-
-   ```bash
-   touch vim_practice.txt
-   vim vim_practice.txt
-   # In Vim:
-   #  1) Press i, type three lines
-   #  2) Press <Esc>, move to line 2, type dd
-   #  3) Enter :%s/Vim/VIM/g, then :wq
-   ```
-
-   **Validate:**
-
-   ```bash
-   grep -q 'Line one: Hello VIM!' vim_practice.txt && echo "Vim OK"
-   ```
-
- **Working with File Content**
-   **Objective:** Generate sample text data, practice viewing subsets with `head`/`tail`, and locate a specific line with `grep -n`.
-   *Description:* Create a 5-line file, inspect its beginning and end, and confirm you can pinpoint “Line 3.”
-
-   **Task:**
-
-   ```bash
-   cd project/src
-   for i in {1..5}; do echo "Line $i" >> sample.txt; done
-   head -n3 sample.txt
-   tail -n2 sample.txt
-   grep -n "Line 3" sample.txt
-   ```
-
-   **Validate:**
-
-   ```bash
-   grep -q '^3:Line 3' sample.txt && echo "Content OK"
-   ```
-
- **Permissions & Ownership**
-   **Objective:** Understand Unix file permissions by making a script executable only by its owner, and verify the permission bits.
-   *Description:* Create a `run.sh` script, inspect its default permissions, tighten them, and check the result.
-
-   **Task:**
-
-   ```bash
-   echo 'echo Hello' > project/src/run.sh
-   ls -l project/src/run.sh
-   chmod u+x,go-rwx project/src/run.sh
-   ```
-
-   **Validate:**
-
-   ```bash
-   ls -l project/src/run.sh | grep -q '^-.rwx' && echo "Perms OK"
-   ```
-
- **Process Management**
-   **Objective:** Launch background jobs, capture and inspect their PIDs, and learn how to terminate them cleanly.
-   *Description:* Run `sleep` in the background, confirm it’s alive via `ps`, then kill it using its PID.
-
-   **Task:**
-
-   ```bash
-   sleep 120 & echo $! > sleep.pid
-   ps x | grep '[s]leep'
-   ps aux | grep '[s]leep'
-   kill "$(cat sleep.pid)"
-   ```
-
-   **Validate:**
-
-   ```bash
-   ps aux | grep sleep | grep -v grep || echo "Process gone"
-   ```
-
- **Useful Utilities: find & tar**
-   **Objective:** Combine `find` with `tar` to archive and extract sets of files, reinforcing directory-and-path handling.
-   *Description:* Locate all `.log` files, archive them into a compressed tarball, then unpack them into a new folder.
-
-   **Task:**
-
-   ```bash
-   mkdir -p project/tests
-   touch project/tests/{a.log,b.log,c.log}
-   find project/tests -name '*.log' > logs.txt
-   tar -czf project/tests/logs.tar.gz -C project/tests *.log
-   mkdir project/tests/extracted
-   tar -xzf project/tests/logs.tar.gz -C project/tests/extracted
-   ```
-
-   **Validate:**
-
-   ```bash
-   test -f project/tests/logs.tar.gz && echo "Archive OK"
-   ls project/tests/extracted | grep -q 'a.log' && echo "Extract OK"
-   ```
-
- **Basic Networking**
-    **Objective:** Verify basic network connectivity, practice SSH to localhost (loopback), and use SCP for secure file copy.
-    *Description:* Ping an external host, open/close an SSH session on localhost, then transfer a file via SCP.
-
-    **Task:**
-
-    ```bash
-    ping -c1 google.com
-    ssh localhost exit
-    scp project/src/sample.txt project/src/sample_copy.txt .
-    ```
-
-    **Validate:**
-
-    ```bash
-    test -f project/src/sample_copy.txt && echo "SCP OK"
-    ```
-
- **Shell Scripting**
-    **Objective:** Build a reusable Bash script that orchestrates multiple commands, then execute it to observe end-to-end flow.
-    *Description:* Write `run_all.sh` to call your `run.sh` test script, make it executable, and run it.
-
-    **Task:**
-
-    ```bash
-    cat > project/run_all.sh << 'EOF'
-    #!/bin/bash
-    echo "Starting Tests"
-    cd project/src && bash run.sh
-    echo "Done"
-    EOF
-    chmod +x project/run_all.sh
-    project/run_all.sh
-    ```
-
-    **Validate:**
-
-    ```bash
-    project/run_all.sh | grep -q Hello && echo "Script OK"
-    ```
-
----
-
-
 
 ## Task : Install EPICS Base on your Linux system
 
