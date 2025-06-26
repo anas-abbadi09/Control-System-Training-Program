@@ -5,14 +5,14 @@
 
 ### Why Learn Linux?
 
-* **It Powers the Internet!**
-  Over **96% of the top 1 million web servers** (think Google, Amazon, Facebook) run Linux—making it the backbone of the web.
+*   **It Powers the Internet!**
+  Leading web servers (Google, Amazon, Facebook) run Linux—making it the backbone of the web.
 
-* **Dominates the Cloud & Servers.**
-  About **90% of cloud infrastructures** (AWS, Azure, Google Cloud) and **all of the top 500 supercomputers** rely on Linux.
+*   **Dominates the Cloud & Servers.**
+  Most cloud infrastructure (AWS, Azure, Google Cloud) and supercomputers rely on Linux.
 
-* **Runs on Most Smartphones.**
-  Android, which is built on the Linux kernel, controls over **70% of phones worldwide**, meaning billions of devices use it daily.
+*  **Runs on Most Smartphones.**
+  Android, built on the Linux kernel, powers the majority of smartphones worldwide—meaning billions of devices use it daily.
 
 * **Everywhere from Smart Devices to Supercomputers.**
   Linux is also found in industries like cybersecurity, embedded systems (e.g., routers and Raspberry Pi), high-performance computing, and IoT.
@@ -20,9 +20,10 @@
 * **A Must‑Have Skill.**
   Whether you’re a software engineer, DevOps professional, system administrator, or cybersecurity expert, knowing how to use Linux is essential—it’s literally what runs the world’s infrastructure.
 
-**In short:** Linux isn’t just *another* operating system—it’s the foundation of almost everything online, from websites to smart gadgets. Learning it gives you the keys to work with servers, cloud systems, and devices at scale.
+**In short:** 
+  Linux isn’t just *another* operating system—it’s the foundation of almost everything online, from websites to smart gadgets. Learning it gives you the keys to work with servers, cloud systems, and devices at scale.
 
-**Linux at Synchrotron Light Sources Like SESAME?**  
+**Linux at SESAME?**  
 
 Linux is the **core operating system** for controlling synchrotron light sources (like SESAME) because:  
 
@@ -31,7 +32,7 @@ Linux is the **core operating system** for controlling synchrotron light sources
 2.  **Open & Customizable**:  
     Engineers adapt Linux to interface with unique hardware (e.g., beamline detectors, motors, power supplies, and beam position sensors).  
 3.  **Industry Standard**:  
-    Globally, >90% of supercomputers and cloud systems use Linux. Synchrotrons like SESAME rely on it for scalability and scientific tool integration.  
+    Synchrotrons like SESAME rely on it for scalability and scientific tool integration.  
 
 
 ### Why Command Line?
