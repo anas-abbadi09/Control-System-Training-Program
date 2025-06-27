@@ -333,34 +333,7 @@ git merge                       # Merge changes
   3. Your analogy: "Fetch is like ______, while pull is like ______"  
 
 
-## Your First Git Project
-
-```bash
-# 1. Create repository
-mkdir climate-research && cd climate-research
-git init
-
-# 2. Create README
-vim README.md
-#   Type: "# Global Warming Study"
-git add README.md
-git commit -m "Initial commit"
-
-# 3. Create and work on feature branch
-git checkout -b temperature-models
-vim sources.txt
-git add sources.txt
-git commit -m "Add data sources"
-
-# 4. Merge changes to main
-git checkout main
-git merge temperature-models
-
-# 5. Configure and push to remote
-git remote add origin https://github.com/your-username/climate-research.git
-git push -u origin main
-```
-## 9. Branching and Merging**
+## 9. Branching and Merging
 
 Branches are independent lines of development. Use them to work on new features without affecting the main code:
 
@@ -425,7 +398,43 @@ Branches are independent lines of development. Use them to work on new features 
   git branch -d new-feature
   ```
 
-## 9. Resolving Merge Conflicts**
+
+## Homework 
+
+```bash
+# 1. Create repository
+mkdir branching-lab && cd branching-lab
+git init
+echo "# Branching Experiment" > README.md
+git add . && git commit -m "Initial commit"
+
+# 2. Create and work on feature branch
+git checkout -b text-formatting
+echo "## Formatting Options" >> README.md
+echo "1. Bold" >> README.md
+git commit -am "Add formatting options"
+
+# 3. Switch to main and make changes
+git checkout main
+echo "## Text Styles" >> README.md
+echo "1. Serif" >> README.md
+git commit -am "Add text styles"
+
+# 4. Merge branches
+git merge text-formatting
+
+# 5. View branch structure
+git log --oneline --graph --all
+```
+
+Email submission:  
+Subject: HW9 – Branching and Merging – [Your Name]  
+Body:  
+Output of git branch -a before merging:  
+What type of merge occurred?
+
+
+## 10. Resolving Merge Conflicts
 
 When you merge two branches, Git attempts to auto-combine changes. If both branches modify the same lines, a **merge conflict** occurs. Git will:
 
@@ -460,7 +469,41 @@ When you merge two branches, Git attempts to auto-combine changes. If both branc
    git merge --abort
    ```
 
-## 10. Deleting Branches**
+## Homework 
+```bash
+# 1. Prepare repository
+mkdir conflict-lab && cd conflict-lab
+git init
+echo "1. Python" > languages.txt
+git add . && git commit -m "Initial commit"
+
+# 2. Create conflicting changes
+git checkout -b web-languages
+echo "2. JavaScript" >> languages.txt
+git commit -am "Add web language"
+
+git checkout main
+echo "2. Java" >> languages.txt
+git commit -am "Add backend language"
+
+# 3. Create merge conflict
+git merge web-languages  # Conflict occurs
+
+# 4. Resolve conflict (Vim required)
+# Resolve by keeping both entries
+git add . && git commit -m "Resolve language conflict"
+
+# 5. Verify resolution
+cat languages.txt
+```
+
+Email submission:  
+Subject: HW10 – Merge Conflicts – [Your Name]  
+Body:  
+Explain your conflict resolution strategy  
+
+
+## 11. Deleting Branches
 
 Once a feature branch has been merged, you can safely remove it to keep your repository tidy:
 
@@ -484,320 +527,139 @@ Once a feature branch has been merged, you can safely remove it to keep your rep
   git push origin --delete <branch_name>
   ```
 
-
-## Project 1: Collaborative Story Writing
-
-*Objective:* Practice branching, merging, and resolving conflicts collaboratively (even in a non-code context).
-
-* **Setup:** One person creates a new public GitHub repository named `git-story-project` and adds an initial `story.txt` with a sentence like "Once upon a time...". Invite one or two collaborators to the repository.
-* **Branching and Writing:** Each collaborator clones the repository locally. Each person creates a branch (for example, `alice-chapter1` or `bob-adds-dragon`). On that branch, they add a paragraph or a few sentences to `story.txt`. Commit often with descriptive messages about the changes.
-* **Pull Requests and Merging:** Push each branch to GitHub and open a Pull Request (PR) for it. Collaborators review the PRs. Then merge each branch into `main` via the GitHub interface or command line. If multiple people edit the same part of `story.txt`, resolve merge conflicts as needed (edit the conflict markers and commit).
-* **Syncing Branches:** After a PR is merged into `main`, collaborators should pull the updated `main` into their local branches (or rebase onto `main`) before continuing work, to stay up-to-date.
-* **Optional:** One person can create a branch to add a table of contents or chapter headings to `story.txt`. When the story is at a point (like first draft complete), create an annotated tag (e.g., `v1.0-draft`) on `main` with `git tag -a v1.0-draft -m "First draft complete"` and push it (`git push origin --tags`).
-
-*Skills Practiced:* Cloning repos, branching (`git branch`, `git checkout -b`), committing changes, pushing branches (`git push`), creating and merging PRs, resolving merge conflicts, and using tags.
-
-## Project 2: Personal Portfolio Website (Static)
-
-*Objective:* Build a simple multi-page static website and manage its development using Git (including deploying with GitHub Pages).
-
-* **Setup:** On GitHub, create a repository named `<yourusername>.github.io` (for default GitHub Pages). Clone it locally or initialize a new repo in a local folder (e.g., `my-portfolio`). Add this repo as `origin`.
-* **Initial Commit:** On `main`, create `index.html` (homepage), `about.html`, and `projects.html`. Add basic HTML structure and a linked CSS file `css/style.css`. Commit and push these files.
-* **Homepage Content:** Create a branch `feature/homepage`. Add introduction content and an image to `index.html`. Update `style.css` to style the homepage. Commit and merge this branch into `main` when done.
-* **About Page:** Create a branch `feature/about-page`. Add your background/skills content to `about.html`, and any needed CSS. Commit and merge into `main`.
-* **Projects Page:** Create a branch `feature/projects-page`. List several projects (real or mock) in `projects.html`. Style as needed. Commit and merge.
-* **Refactoring:** (Optional) Create a branch `refactor/css`. Maybe split the CSS into multiple files (e.g., `layout.css`, `colors.css`) and update the HTML to link them. Commit and merge.
-* **Contact Form:** Create a branch `feature/contact-form`. Add a simple contact form in a new `contact.html` or on one of the existing pages. Style it in CSS. Commit and merge.
-* **.gitignore:** If you use build tools (like Sass/SCSS compilers or editor backups), add those outputs or temp files to `.gitignore`.
-* **GitHub Pages:** If using `<username>.github.io` repo, your site is automatically deployed from `main`. Otherwise, enable GitHub Pages in repo settings and choose the `main` branch. Visit `https://yourusername.github.io` (or provided URL) to see your live site.
-* **Deployment Update:** Make a small change (like updating a project description) on `main`, commit and push, and verify the live site reflects it.
-* **Reverting a Mistake:** (Simulation) On a new branch `feature/bad-change`, make a change that breaks the site (e.g., bad CSS). Commit and merge it. Then use `git revert <commit>` on `main` to undo it and push, restoring the site. (Alternatively, use `git reset --hard` on your local `main` and force-push, but this rewrites history and is discouraged on shared branches.)
-
-*Skills Practiced:* Full Git workflow (initializing, cloning, branching, merging), committing and pushing to GitHub, using GitHub Pages, `.gitignore` usage, and undoing changes with `git revert`.
+## Homework 
 
 
 
-
-temppppppppp
-
-
-
-
-### Project 1: Collaborative Story Generator (Final Version)
-
-**Objective**: Practice Git workflows with guaranteed conflict resolution using Python story generation.
-
-#### Python Scripts
-**1. story_generator.py**:
-```python
-import random
-
-beginnings = [
-    "Once upon a time",
-    "In a distant galaxy",
-    "Long ago in a magical kingdom"
-]
-
-characters = [
-    "a curious programmer",
-    "a robotic cat",
-    "a wise old owl"
-]
-
-actions = [
-    "discovered Git magic",
-    "solved a coding mystery",
-    "learned Python spells"
-]
-
-print(f"{random.choice(beginnings)}, {random.choice(characters)} {random.choice(actions)}.")
-```
-
-**2. story_combiner.py** (Fixed):
-```python
-import sys
-import os
-
-output_filename = "master_story.txt"
-
-if len(sys.argv) < 2:
-    print(f"Usage: python {sys.argv[0]} file1.txt file2.txt ...")
-    exit(1)
-
-combined = ""
-for filename in sys.argv[1:]:
-    if os.path.basename(filename) == output_filename:
-        print(f"Skipping '{filename}'...")
-        continue
-    
-    try:
-        with open(filename, 'r') as f:
-            combined += f.read().strip() + "\n\n"
-    except FileNotFoundError:
-        print(f"Warning: {filename} not found")
-
-with open(output_filename, 'w') as out:
-    out.write(combined)
-
-print(f"Stories combined into {output_filename}")
-```
-
-#### Git Workflow
 ```bash
-# 1. Setup
-git clone https://github.com/yourusername/story-generator.git
-cd story-generator
-echo -e '#!/bin/bash\npython story_generator.py > "$1.txt"' > generate_story
-chmod +x generate_story
+# 1. Create repository
+mkdir branch-cleanup && cd branch-cleanup
+git init
+echo "# Branch Management" > README.md
 git add . && git commit -m "Initial commit"
 
-# 2. Create conflicting branches
-git checkout -b add-dragon
-sed -i '/characters = \[/a\    "a friendly dragon",' story_generator.py
-git commit -am "Add dragon character"
+# 2. Create multiple branches
+git checkout -b feature-1
+echo "Feature 1" > feature1.txt
+git add . && git commit -m "Add feature 1"
 
 git checkout main
-git checkout -b add-ninja
-sed -i '/characters = \[/a\    "a stealthy ninja",' story_generator.py
-git commit -am "Add ninja character"
+git checkout -b feature-2
+echo "Feature 2" > feature2.txt
+git add . && git commit -m "Add feature 2"
 
-# 3. Create conflict
+# 3. Merge and delete branches
 git checkout main
-git merge add-dragon
-git merge add-ninja  # CONFLICT!
+git merge feature-1
+git branch -d feature-1
 
-# 4. Resolve conflict
-# Edit story_generator.py to keep BOTH characters
-nano story_generator.py  # Manual edit
-git add story_generator.py
-git commit -m "Resolve conflict: keep both characters"
+# 4. Attempt invalid deletion
+git branch -d feature-2  # Should fail
 
-# 5. Generate stories
-./generate_story chapter1
-./generate_story chapter2
-python story_combiner.py chapter*.txt
+# 5. Force delete and clean remote
+git branch -D feature-2
 
-# 6. Finalize
-git add .
-git commit -m "Add story chapters"
-git tag v1.0-story
-git push --tags
+# Simulate remote
+git remote add origin https://github.com/your-username/branch-cleanup.git
+git push -u origin main
+
+# 6. Delete remote branch (simulated)
+git push origin --delete feature-2
 ```
 
-#### Verification
+Email submission:  
+Subject: HW11 – Deleting Branches – [Your Name]  
+Body:  
+When would you use git branch -D instead of -d?  
+
+
+## 12. Git Project
+
+
 ```bash
-# Check conflict resolution
-git diff HEAD~2 HEAD~1  # Should show dragon addition
-git diff HEAD~1 HEAD    # Should show ninja addition
+# Git Project: Climate Research
 
-# Test combiner
-python story_combiner.py chapter1.txt chapter2.txt
-cat master_story.txt
-```
+# 1. Create repository
+mkdir climate-research && cd climate-research
+git init
 
----
+# 2. Configure identity
+git config --local user.name "Your Name"
+git config --local user.email "you@example.com"
 
-### Project 2: Template-Based Portfolio (Final Version)
+# 3. Create README with Vim
+vim README.md  # Add "# Global Warming Study" and save
+git add README.md
+git commit -m "Initial commit"
 
-**Objective**: Build portfolio using Python templates with validation and safe deployment.
+# 4. Create .gitignore with Vim
+vim .gitignore  # Add patterns: *.tmp, *.log, data/, notes.txt
+git add .gitignore
+git commit -m "Add .gitignore"
 
-#### Project Structure
-```
-.
-├── templates/
-│   └── base.html
-├── content/
-│   ├── index.md
-│   ├── about.md
-│   └── projects.md
-├── builder.py
-├── validator.py
-└── style.css
-```
+# 5. Create data file with Vim
+vim climate-data.csv  # Add "1. Historical temperature data"
+git status  # Verify untracked file
 
-#### Core Files
-**1. templates/base.html**:
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{title}} | My Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <nav>
-        <a href="index.html">Home</a> |
-        <a href="about.html">About</a> |
-        <a href="projects.html">Projects</a>
-    </nav>
-    <h1>{{title}}</h1>
-    <div>{{content}}</div>
-</body>
-</html>
-```
+# 6. Stage and commit changes
+git add climate-data.csv
+git commit -m "Add initial dataset"
 
-**2. builder.py** (Fixed):
-```python
-import os
-import markdown  # pip install markdown
+# 7. Create feature branch
+git checkout -b data-analysis
 
-def build_site():
-    for page in os.listdir('content'):
-        if page.endswith('.md'):
-            name = page[:-3]
-            with open(f'content/{page}') as f:
-                content = markdown.markdown(f.read())
-            
-            with open('templates/base.html') as f:
-                html = f.read()
-            
-            html = html.replace('{{title}}', name.capitalize())
-            html = html.replace('{{content}}', content)
-            
-            with open(f'{name}.html', 'w') as f:
-                f.write(html)
-    print("Site built successfully")
+# 8. Make changes in branch
+vim climate-data.csv  # Add "2. CO2 emission data"
+git commit -am "Add emissions data"
 
-if __name__ == '__main__':
-    build_site()
-```
-
-**3. validator.py**:
-```python
-import sys
-
-def validate_html(file):
-    with open(file) as f:
-        content = f.read()
-        if '</body>' not in content or '</html>' not in content:
-            return False
-    return True
-
-if __name__ == '__main__':
-    if not validate_html(sys.argv[1]):
-        print(f"ERROR: {sys.argv[1]} has invalid HTML structure")
-        exit(1)
-    print("Validation successful")
-```
-
-#### Workflow
-```bash
-# 1. Setup
-git clone https://github.com/yourusername/portfolio.git
-cd portfolio
-python -m pip install markdown
-echo "__pycache__/" > .gitignore
-git add . && git commit -m "Initial commit"
-python builder.py
-
-# 2. Add contact page
-git checkout -b contact-page
-echo "## Contact\nEmail: me@example.com" > content/contact.md
-python builder.py
-git add .
-git commit -m "Add contact page"
-
-# 3. Merge changes
+# 9. Switch to main and create conflicting change
 git checkout main
-git merge contact-page
+vim climate-data.csv  # Add "2. Precipitation data"
+git commit -am "Add precipitation data"
 
-# 4. Create and revert bad update
-git checkout -b bad-update
-sed -i 's/<\/body>/<!-- /g' templates/base.html  # Break HTML
-python builder.py
-python validator.py index.html || echo "Validation failed (expected)"
-git commit -am "Bad template update"
+# 10. Merge branches (will cause conflict)
+git merge data-analysis
 
-git checkout main
-git merge bad-update
-git revert HEAD -m 1 --no-edit
+# Resolve conflict in Vim
+vim climate-data.csv  # Keep both entries, remove conflict markers
+git add climate-data.csv
+git commit -m "Resolve merge conflict"
 
-# 5. Fix and verify
-python builder.py
-python validator.py index.html && echo "Validation passed"
+# 11. Delete feature branch
+git branch -d data-analysis
 
-# 6. Deploy
-git add *.html
-git commit -m "Rebuild site"
-git push origin main
+# 12. Add remote
+git remote add origin https://github.com/your-username/climate-research.git
+
+# 13. Push to remote
+git push -u origin main
+
+# 14. Simulate collaboration
+# In another terminal:
+#   git clone https://github.com/your-username/climate-research.git climate-collab
+#   cd climate-collab
+#   vim research-notes.md  # Add content
+#   git add research-notes.md
+#   git commit -m "Add research notes"
+#   git push origin main
+
+# Back in original repo:
+git pull origin main
+
+# 15. View project history
+git log --oneline --graph
 ```
 
-#### Verification Commands
-```bash
-# Check HTML structure
-grep -c '</body>' *.html
 
-# Test validation
-python validator.py index.html
 
-# Check deployment
-curl -s https://yourusername.github.io | grep -q "My Portfolio" && echo "Live"
-```
+**Homework Assignment: Git Porject**
 
----
+**Email submission:**
 
-### Key Improvements:
+- **Subject**: `HW12 – Git Porject – [Your Name]`
+- **Body**:
+  1. Output of `git log --oneline --graph`:
+  2. Content of `climate-data.csv` after merge conflict resolution:
+  3. Output of `git remote -v`:
+  4. Explain what caused the merge conflict in step 10 and how you resolved it.
 
-**Project 1**:
-1. Added `generate_story` script for consistent file naming
-2. Fixed newline escaping in Python combiner
-3. Added error handling for missing files
-4. Simplified conflict creation with `sed`
-5. Added verification commands
-
-**Project 2**:
-1. Added Markdown support for content
-2. Fixed template variable replacement
-3. Added proper HTML validation
-4. Simplified bad update creation
-5. Added dependency installation step
-6. Improved verification commands
-
-**Both Projects**:
-1. Added explicit error handling
-2. Included verification steps
-3. Simplified conflict creation
-4. Fixed all syntax issues
-5. Added post-operation checks
-6. Ensured compatibility with Rocky Linux
