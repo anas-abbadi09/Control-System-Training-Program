@@ -53,7 +53,7 @@ git commit -m "Initial commit"
 ```  
 
 **Email submission**:  
-- **Subject**: `HW1 – Git Installation – [Your Name]`  
+- **Subject**: `HW3 – Git Installation – [Your Name]`  
 - **Body**:  
   1. Git version from `git --version`  
   2. Your configured name/email  
@@ -94,7 +94,7 @@ git status
 ```  
 
 **Email submission**:  
-- **Subject**: `HW2 – Initializing a Repository and File States – [Your Name]`  
+- **Subject**: `HW4 – Initializing a Repository and File States – [Your Name]`  
 - **Body**:  
   a) Full output of `git status`  
   b) Why `tasks.txt` appears as untracked  
@@ -348,3 +348,290 @@ git merge                       # Merge changes
 * **Reverting a Mistake:** (Simulation) On a new branch `feature/bad-change`, make a change that breaks the site (e.g., bad CSS). Commit and merge it. Then use `git revert <commit>` on `main` to undo it and push, restoring the site. (Alternatively, use `git reset --hard` on your local `main` and force-push, but this rewrites history and is discouraged on shared branches.)
 
 *Skills Practiced:* Full Git workflow (initializing, cloning, branching, merging), committing and pushing to GitHub, using GitHub Pages, `.gitignore` usage, and undoing changes with `git revert`.
+
+
+
+
+temppppppppp
+
+
+
+
+### Project 1: Collaborative Story Generator (Final Version)
+
+**Objective**: Practice Git workflows with guaranteed conflict resolution using Python story generation.
+
+#### Python Scripts
+**1. story_generator.py**:
+```python
+import random
+
+beginnings = [
+    "Once upon a time",
+    "In a distant galaxy",
+    "Long ago in a magical kingdom"
+]
+
+characters = [
+    "a curious programmer",
+    "a robotic cat",
+    "a wise old owl"
+]
+
+actions = [
+    "discovered Git magic",
+    "solved a coding mystery",
+    "learned Python spells"
+]
+
+print(f"{random.choice(beginnings)}, {random.choice(characters)} {random.choice(actions)}.")
+```
+
+**2. story_combiner.py** (Fixed):
+```python
+import sys
+import os
+
+output_filename = "master_story.txt"
+
+if len(sys.argv) < 2:
+    print(f"Usage: python {sys.argv[0]} file1.txt file2.txt ...")
+    exit(1)
+
+combined = ""
+for filename in sys.argv[1:]:
+    if os.path.basename(filename) == output_filename:
+        print(f"Skipping '{filename}'...")
+        continue
+    
+    try:
+        with open(filename, 'r') as f:
+            combined += f.read().strip() + "\n\n"
+    except FileNotFoundError:
+        print(f"Warning: {filename} not found")
+
+with open(output_filename, 'w') as out:
+    out.write(combined)
+
+print(f"Stories combined into {output_filename}")
+```
+
+#### Git Workflow
+```bash
+# 1. Setup
+git clone https://github.com/yourusername/story-generator.git
+cd story-generator
+echo -e '#!/bin/bash\npython story_generator.py > "$1.txt"' > generate_story
+chmod +x generate_story
+git add . && git commit -m "Initial commit"
+
+# 2. Create conflicting branches
+git checkout -b add-dragon
+sed -i '/characters = \[/a\    "a friendly dragon",' story_generator.py
+git commit -am "Add dragon character"
+
+git checkout main
+git checkout -b add-ninja
+sed -i '/characters = \[/a\    "a stealthy ninja",' story_generator.py
+git commit -am "Add ninja character"
+
+# 3. Create conflict
+git checkout main
+git merge add-dragon
+git merge add-ninja  # CONFLICT!
+
+# 4. Resolve conflict
+# Edit story_generator.py to keep BOTH characters
+nano story_generator.py  # Manual edit
+git add story_generator.py
+git commit -m "Resolve conflict: keep both characters"
+
+# 5. Generate stories
+./generate_story chapter1
+./generate_story chapter2
+python story_combiner.py chapter*.txt
+
+# 6. Finalize
+git add .
+git commit -m "Add story chapters"
+git tag v1.0-story
+git push --tags
+```
+
+#### Verification
+```bash
+# Check conflict resolution
+git diff HEAD~2 HEAD~1  # Should show dragon addition
+git diff HEAD~1 HEAD    # Should show ninja addition
+
+# Test combiner
+python story_combiner.py chapter1.txt chapter2.txt
+cat master_story.txt
+```
+
+---
+
+### Project 2: Template-Based Portfolio (Final Version)
+
+**Objective**: Build portfolio using Python templates with validation and safe deployment.
+
+#### Project Structure
+```
+.
+├── templates/
+│   └── base.html
+├── content/
+│   ├── index.md
+│   ├── about.md
+│   └── projects.md
+├── builder.py
+├── validator.py
+└── style.css
+```
+
+#### Core Files
+**1. templates/base.html**:
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}} | My Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a> |
+        <a href="about.html">About</a> |
+        <a href="projects.html">Projects</a>
+    </nav>
+    <h1>{{title}}</h1>
+    <div>{{content}}</div>
+</body>
+</html>
+```
+
+**2. builder.py** (Fixed):
+```python
+import os
+import markdown  # pip install markdown
+
+def build_site():
+    for page in os.listdir('content'):
+        if page.endswith('.md'):
+            name = page[:-3]
+            with open(f'content/{page}') as f:
+                content = markdown.markdown(f.read())
+            
+            with open('templates/base.html') as f:
+                html = f.read()
+            
+            html = html.replace('{{title}}', name.capitalize())
+            html = html.replace('{{content}}', content)
+            
+            with open(f'{name}.html', 'w') as f:
+                f.write(html)
+    print("Site built successfully")
+
+if __name__ == '__main__':
+    build_site()
+```
+
+**3. validator.py**:
+```python
+import sys
+
+def validate_html(file):
+    with open(file) as f:
+        content = f.read()
+        if '</body>' not in content or '</html>' not in content:
+            return False
+    return True
+
+if __name__ == '__main__':
+    if not validate_html(sys.argv[1]):
+        print(f"ERROR: {sys.argv[1]} has invalid HTML structure")
+        exit(1)
+    print("Validation successful")
+```
+
+#### Workflow
+```bash
+# 1. Setup
+git clone https://github.com/yourusername/portfolio.git
+cd portfolio
+python -m pip install markdown
+echo "__pycache__/" > .gitignore
+git add . && git commit -m "Initial commit"
+python builder.py
+
+# 2. Add contact page
+git checkout -b contact-page
+echo "## Contact\nEmail: me@example.com" > content/contact.md
+python builder.py
+git add .
+git commit -m "Add contact page"
+
+# 3. Merge changes
+git checkout main
+git merge contact-page
+
+# 4. Create and revert bad update
+git checkout -b bad-update
+sed -i 's/<\/body>/<!-- /g' templates/base.html  # Break HTML
+python builder.py
+python validator.py index.html || echo "Validation failed (expected)"
+git commit -am "Bad template update"
+
+git checkout main
+git merge bad-update
+git revert HEAD -m 1 --no-edit
+
+# 5. Fix and verify
+python builder.py
+python validator.py index.html && echo "Validation passed"
+
+# 6. Deploy
+git add *.html
+git commit -m "Rebuild site"
+git push origin main
+```
+
+#### Verification Commands
+```bash
+# Check HTML structure
+grep -c '</body>' *.html
+
+# Test validation
+python validator.py index.html
+
+# Check deployment
+curl -s https://yourusername.github.io | grep -q "My Portfolio" && echo "Live"
+```
+
+---
+
+### Key Improvements:
+
+**Project 1**:
+1. Added `generate_story` script for consistent file naming
+2. Fixed newline escaping in Python combiner
+3. Added error handling for missing files
+4. Simplified conflict creation with `sed`
+5. Added verification commands
+
+**Project 2**:
+1. Added Markdown support for content
+2. Fixed template variable replacement
+3. Added proper HTML validation
+4. Simplified bad update creation
+5. Added dependency installation step
+6. Improved verification commands
+
+**Both Projects**:
+1. Added explicit error handling
+2. Included verification steps
+3. Simplified conflict creation
+4. Fixed all syntax issues
+5. Added post-operation checks
+6. Ensured compatibility with Rocky Linux
