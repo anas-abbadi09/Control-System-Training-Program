@@ -59,26 +59,43 @@ git commit -m "Initial commit"
   2. Your configured name/email  
   3. Output of `git log --oneline` in ~/git-lab 
 
-## 4. Initializing a Repository and File States
+## 4. Initializing a Repository and File States  
 
-To start tracking a project with Git, navigate to your project’s folder and run:
+To start tracking a project with Git, navigate to your project’s folder and run:  
 
-```
+```bash
 git init
-```
+```  
 
-This creates a `.git` directory and starts a new Git repository. Now Git will track changes to files in this folder.
+This creates a hidden `.git` directory, initializing a new Git repository. Git will now track changes to files in this folder.  
 
-There are three important "states" for files in Git:
+Files in Git exist in one of three main states:  
 
-* **Working Directory (Untracked):** Your actual project files. New files are **untracked** until you tell Git about them.
-* **Staging Area (Staged):** When you run `git add <file>`, you move changes from the working directory to the staging area, preparing them for a commit.
-* **Repository (Committed):** When you run `git commit`, Git takes everything in the staging area and saves it as a snapshot in the repository.
+* **Working Directory (Untracked/Modified):**  
+  Your active project files. New files are **untracked** by default. Existing tracked files become **modified** when changed but not staged.  
+* **Staging Area (Staged):**  
+  When you run `git add <file>`, changes move from the working directory to the staging area, preparing them for a commit.  
+* **Repository (Committed):**  
+  Running `git commit` permanently saves the staged snapshot to the repository.  
 
-  ![deepseek_mermaid_20250626_25d0bc](https://github.com/user-attachments/assets/decd4238-37b1-48e1-92a0-e8115daf10c3)
+![Git File States Diagram](https://github.com/user-attachments/assets/decd4238-37b1-48e1-92a0-e8115daf10c3)  
 
+### Core Concepts Made Simple  
+- **Repository:** Project folder tracked by Git  
+- **Commit:** Saved snapshot (like a game save point)  
+- **Branch:** Parallel development line for experiments  
+- **Remote:** Cloud-hosted copy (e.g., GitHub/GitLab)  
 
-Use `git status` to see which files are untracked, modified, or staged. It’s very helpful to see what’s going on.
+### Local vs. Remote Repositories  
+- **Local Repository:**  
+  Lives on your computer (created by `git init`). This is your private workspace where you make changes and commit snapshots.  
+- **Remote Repository:**  
+  Hosted on a server (e.g., GitHub/GitLab). Acts as a shared central hub for collaboration.  
+  - Sync with `git push` (upload local → remote)  
+  - Update with `git pull` (download remote → local)  
+
+Use `git status` to see file states (untracked, modified, or staged). This command is essential for understanding your current workflow status.
+
 
 ## Homework:  
 1. Create repository and file:  
@@ -316,7 +333,156 @@ git merge                       # Merge changes
   3. Your analogy: "Fetch is like ______, while pull is like ______"  
 
 
+## Your First Git Project
 
+```bash
+# 1. Create repository
+mkdir climate-research && cd climate-research
+git init
+
+# 2. Create README
+vim README.md
+#   Type: "# Global Warming Study"
+git add README.md
+git commit -m "Initial commit"
+
+# 3. Create and work on feature branch
+git checkout -b temperature-models
+vim sources.txt
+git add sources.txt
+git commit -m "Add data sources"
+
+# 4. Merge changes to main
+git checkout main
+git merge temperature-models
+
+# 5. Configure and push to remote
+git remote add origin https://github.com/your-username/climate-research.git
+git push -u origin main
+```
+## 9. Branching and Merging**
+
+Branches are independent lines of development. Use them to work on new features without affecting the main code:
+
+* **List branches**
+
+  * Local:
+
+    ```bash
+    git branch
+    ```
+  * Remote:
+
+    ```bash
+    git branch -r
+    ```
+  * All:
+
+    ```bash
+    git branch -a
+    ```
+
+* **Create a branch**
+
+  ```bash
+  git branch new-feature
+  ```
+
+* **Switch branches**
+
+  ```bash
+  git checkout new-feature
+  ```
+
+  **Shortcut:**
+
+  ```bash
+  git checkout -b new-feature
+  ```
+
+  (creates **and** switches)
+
+* **Merge a branch**
+
+  1. Switch to the target branch (e.g., `main`):
+
+     ```bash
+     git checkout main
+     ```
+  2. Merge in your feature branch:
+
+     ```bash
+     git merge new-feature
+     ```
+
+  * If `main` has no new commits, Git will perform a *fast-forward* merge.
+  * If both branches have new commits, Git will create a new **merge commit**.
+
+* **Clean up**
+  After merging, you can delete the feature branch if you no longer need it:
+
+  ```bash
+  git branch -d new-feature
+  ```
+
+## 9. Resolving Merge Conflicts**
+
+When you merge two branches, Git attempts to auto-combine changes. If both branches modify the same lines, a **merge conflict** occurs. Git will:
+
+1. **Pause the merge**
+
+2. **Insert conflict markers** into the affected file(s):
+
+   ```diff
+   <<<<<<< HEAD
+   // code from your current branch
+   =======
+   // code from the branch being merged
+   >>>>>>> feature-branch
+   ```
+
+3. **Resolve the conflict**:
+
+   * Open the file and decide which code to keep (you can also combine both).
+   * Remove the `<<<<<<<`, `=======`, and `>>>>>>>` lines.
+   * Save the file.
+
+4. **Finalize the merge**:
+
+   ```bash
+   git add <file>
+   git commit
+   ```
+
+5. **Abort the merge** (if you change your mind before committing):
+
+   ```bash
+   git merge --abort
+   ```
+
+## 10. Deleting Branches**
+
+Once a feature branch has been merged, you can safely remove it to keep your repository tidy:
+
+* **Delete locally**
+
+  ```bash
+  git branch -d <branch_name>
+  ```
+
+  Git will refuse to delete if the branch hasn’t been merged.
+
+* **Force-delete locally** (use with caution):
+
+  ```bash
+  git branch -D <branch_name>
+  ```
+
+* **Delete on the remote**
+
+  ```bash
+  git push origin --delete <branch_name>
+  ```
 
 
 ## Project 1: Collaborative Story Writing
