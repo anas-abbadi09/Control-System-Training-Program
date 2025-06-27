@@ -199,7 +199,7 @@ sudo dnf install -y tldr
 tldr chmod
 ```
 
-**Homework**:  
+## Homework:
 Investigate the `grep` command using these help methods:  
 
 1. **Quick Reference**  
@@ -257,7 +257,7 @@ DNF handles software installation, updates, and removal while resolving dependen
 * **Remove Unused Dependencies:** `sudo dnf autoremove`.
 * **Clean Caches:** `sudo dnf clean all`.
 
-**Homework**:  
+## Homework:
 Perform these tasks **in your terminal** and report outputs:  
 
 1. **Search for Packages**  
@@ -357,7 +357,8 @@ rm myproject/docs/INSTRUCTIONS.txt
 ```
 
 
-**Homework**:  
+## Homework:
+
 Perform these tasks **in your terminal** and report outputs:  
 
 1. **Home Directory Check**  
@@ -451,38 +452,37 @@ head -n2 text.txt
 grep "Line 2" text.txt
 ```
 
-### Homework: File Content Operations  
-**Objective:** Practice essential file viewing, extraction, and monitoring techniques  
+## Homework:
 
-**Task: Create `hw7_commands.sh` Script**  
-Write commands to perform these operations:  
+Perform these tasks in your terminal and report outputs:  
 
+1. **Create & View Sample File**  
 ```bash
-#!/bin/bash
-# HW7 Solution - File Operations
+echo -e "App log: Info entry\nApp log: ERROR: File missing\nApp log: Warning: Low disk\nApp log: Info: Backup complete" > app.log
+head -3 app.log
+```  
+*What to note*: First 3 lines  
 
-# 1. Show first 7 lines of kernel log
-head -7 /var/log/kern.log
+2. **Search for Errors**  
+```bash
+grep -i "error" app.log
+```  
+*What to note*: The matching line  
 
-# 2. Extract lines 8-50 from auth log
-sed -n '8,50p' /var/log/auth.log
+3. **Monitor File Changes**  
+```bash
+echo "New log entry at $(date)" >> app.log
+tail -n1 app.log
+```  
+*What to note*: The new last line  
 
-# 3. Display last 15 lines of syslog
-tail -15 /var/log/syslog
-
-# 4. Find "error" in common config files (case-insensitive)
-grep -Rin --include='*.conf' 'error' /etc
-
-# 5. Monitor kernel log for 30 seconds
-timeout 30 tail -f /var/log/kern.log
-```
-
-**Submission Requirements:**  
-- **Subject**: `HW7 – File Content - [Your Name]`  
-- **Attachment**: `hw7_commands.sh`  
-- **Email Body**:  
-  1. Paste one matching line from your `grep` search  
-  2. Complete: "During `tail -f`, I observed: ______"
+**Email submission**:  
+- **Subject**: `HW7 – File Practice – [Your Name]`  
+- **Body**:  
+  1. First 3 lines from Task 1  
+  2. Error line from Task 2  
+  3. New entry from Task 3  
+  4. Why `less` is safer than `cat` for large files
  
 
 
@@ -547,50 +547,68 @@ sudo chown alice:developers project/   # owner=alice, group=developers
 sudo chown -R bob: project_data/       # owner=bob for project_data/ and all inside; group=bob's group
 ```
 
-### Exercise: Permissions
+## Homework:
+  
+#### Task 1: Permission Interpretation  
+Interpret these file permissions:  
+`-rwxr--r-- 1 ahmad analysts 2048 Jul 10 09:15 secret_notes.txt`  
+
+*Answer these in your email*:  
+1. File type: Regular file, Directory, or Symbolic link?  
+2. Can ahmad:  
+   - Read the file?  
+   - Modify the file?  
+   - Execute the file?  
+3. Can group members:  
+   - Read the file?  
+   - Modify the file?  
+   - Execute the file?  
+4. Can others:  
+   - Read the file?  
+   - Modify the file?  
+   - Execute the file?  
+
+#### Task 2: Hands-On Practice  
+Follow these steps in your terminal:  
+
+1. **Create test file**  
 ```bash
-# Task 1: Create script
-echo 'echo "Hello"' > myscript.sh
-
-# Task 2: Make executable
-chmod u+x myscript.sh
-
-# Task 3: Run script
-./myscript.sh
+touch ~/test_file.txt
 ```
 
-## Homework
+2. **Check default permissions**  
+```bash
+ls -l ~/test_file.txt
+```
 
-### Interpret permissions
+3. **Add execute permission**  
+```bash
+chmod u+x ~/test_file.txt
+```
 
-Imagine you run `ls -l` and see:
-`-rwxr--r-- 1 carol analysts 2048 Jul 10 09:15 secret_notes.txt`
+4. **Verify change**  
+```bash
+ls -l ~/test_file.txt
+```
 
-**Task 1:** In an email, state the file type, and list exactly what permissions Carol (the owner), the group, and others have.
+5. **Remove write permission**  
+```bash
+chmod go-w ~/test_file.txt
+```
 
----
+6. **Final verification**  
+```bash
+ls -l ~/test_file.txt
+```
 
-### Change permissions and ownership
-
-**Task 2:** Create a script named `hw8_commands.sh` that:
-
-* Sets `project_alpha/` and everything inside to be **readable and writable** by **owner and group**, but **inaccessible** to others.
-* Makes the file `project_alpha/config.yml` **executable by owner only**.
-* Changes the **owner** of `project_alpha/` and its contents to **user `dave`** and **group `qa`**.
-
----
-
-### Email Submission
-
-**Subject:** HW8 – Permissions & Ownership
-
-**Attach:** `hw8_commands.sh`
-
-**Email Body:**
-
-* For **task 1**, provide a **one-sentence answer** describing the permissions.
-* For **task 2**, write a **two-sentence summary** of what each command in your script does.
-
+**Email submission**:  
+- **Subject**: `HW8 – Permissions – [Your Name]`  
+- **Body**:  
+  1. Task 1 answers  
+  2. Output from Step 2  
+  3. Output from Step 4  
+  4. Output from Step 6  
+  5. Why execute permission is dangerous for regular files
 
 
 ## 9. Process Management
@@ -659,42 +677,57 @@ sudo dnf install htop
 
 Then run `htop`.
 
-### Exercise: Process Management
+
+
+## Homework:  
+Perform these tasks in your terminal:  
+
+#### Task 1: View Your Processes  
 ```bash
-# Task 1: Start background sleep
-sleep 30 &
+ps x
+```  
+*What to note*:  
+- PID of your terminal (look for `bash` or your shell name)  
+- One background process if available  
 
-# Task 2: Find process ID
-ps aux | grep sleep
+#### Task 2: System Process Overview  
+```bash
+ps aux | head -5
+```  
+*What to note*:  
+- First two processes listed  
+- Their USER and %CPU columns  
 
-# Task 3: Stop process
-kill $!
-```
+#### Task 3: Safe Process Handling  
+```bash
+# Start a harmless sleep process
+sleep 60 &
 
-## Homework
+# Find its PID
+sleep_pid=$!
 
-### Process listing and control
+# View process details
+ps -p $sleep_pid
 
-In a script named `hw9_commands.sh`, write commands to:
+# Cancel it safely
+kill $sleep_pid
 
-* Save a full system process snapshot to `all_procs.txt`.
-* Show only your user's processes.
-* Launch a background `sleep 200` process.
-* Find and kill that `sleep` process by its PID.
+# Verify it's gone
+ps -p $sleep_pid || echo "Process terminated"
+```  
+*What to note*:  
+- PID of the sleep process  
+- Output after killing it  
 
----
-
-### Email submission
-
-**Subject:** HW9 – Process Management
-
-**Attach:**
-* `hw9_commands.sh` (your script)
-* `all_procs.txt` (the snapshot from step 1)
-
-**In the body:**
-State the PID you identified and killed.
-
+**Email submission**:  
+- **Subject**: `HW9 – Processes – [Your Name]`  
+- **Body**:  
+  1. Your terminal's PID  
+  2. First two processes from `ps aux`  
+  3. Sleep process PID  
+  4. Termination verification message  
+  5. Why we avoid `kill -9`
+ 
 
 
 
@@ -758,45 +791,50 @@ find . -name "*.log"
 tar -czf archive.tar.gz file1.log
 ```
 
-### Exercise: Scripting
+## Homework:  
+
+#### Task 1: Create Practice Files  
 ```bash
-# Task 1: Create script
-echo -e '#!/bin/bash\necho "Script works!"' > test.sh
+mkdir -p ~/util_practice  
+touch ~/util_practice/file{1..3}.tmp  
+echo "Original content" > ~/util_practice/notes.txt  
+```  
 
-# Task 2: Make executable
-chmod +x test.sh
+#### Task 2: Compress Files  
+```bash  
+gzip -v ~/util_practice/*.tmp  
+```  
+*What to note*: Names of compressed files  
 
-# Task 3: Run script
-./test.sh
-```
+#### Task 3: Create Archive  
+```bash  
+tar -czvf util_backup.tar.gz ~/util_practice  
+```  
+*What to note*: First file listed in tar output  
 
-## Homework
+#### Task 4: Vim Editing Practice  
+```bash  
+vim ~/util_practice/notes.txt  
+```  
+*Follow these steps in Vim*:  
+1. Press `gg` (go to top)  
+2. Press `i` (enter insert mode)  
+3. Type `# Backup Completed`  
+4. Press `Esc`  
+5. Type `:wq` + `Enter` (save and quit)  
 
-### Archive and compress
+#### Task 5: Verify Results  
+```bash  
+head -1 ~/util_practice/notes.txt  
+ls ~/util_practice  
+```  
 
-Create a script named `hw10_archive.sh` that:
-
-* Finds every `.tmp` file under `~/workdir` and compresses it in place with `gzip`.
-* Creates an XZ-compressed tarball `~/backups/workdir_backup.tar.xz` containing the entire `~/workdir` directory.
-
-### Quick Vim edit
-
-In a file at `~/workdir/notes.txt`, insert the line `# Workdir Backup Completed` at the very top, then save and exit Vim, using only Normal, Insert, and Command modes (no mouse).
-
----
-
-### Email submission
-
-**Subject:** HW10 – Utilities & Vim
-
-**Attach:**
-* `hw10_archive.sh`
-* A plain text file `vim_steps.txt` listing the exact keystrokes you used in Vim.
-
-**In the body:**
-* Paste the output line from `tar -tjf ~/backups/workdir_backup.tar.xz | head -1`.
-* One sentence confirming that the first line of `notes.txt` now reads your header.
-
+**Email submission**:  
+- **Subject**: `HW10 – Utilities – [Your Name]`  
+- **Body**:  
+  1. Compressed file from Task 2  
+  2. First file in tar output (Task 3)  
+  3. First line of notes.txt (Task 5)
 
 
 ## 11. Basic Networking Commands
@@ -851,80 +889,98 @@ SSH is a secure way to connect to and manage Linux servers remotely. You can exe
   ss -tulwn       # same, more verbose
   ```
 
-### Exercise: Networking
-```bash
-# Task 1: Check connectivity
-ping -c1 localhost
+## Homework:  
+#### Task 1: Connectivity Test  
+```bash  
+ping -c 3 localhost  
+```  
+*What to note*:  
+- Round-trip times  
+- Packet loss percentage  
 
-# Task 2: Local file copy
-cp file2.conf copy.conf
+#### Task 2: Network Status Check  
+```bash  
+ss -tun | head -5  
+```  
+*What to note*:  
+- One listening service  
+- Its port number  
 
-# Task 3: Verify copy
-ls -l copy.conf
-```
+#### Task 3: Remote Command Simulation  
+```bash  
+echo "Simulated remote hostname: $(hostname)"  
+```  
+*What to note*:  
+- Your system's hostname  
 
-## Homework
-
-### Compose a networking script
-
-Create `hw11_commands.sh` containing commands to:
-
-* SSH into `devops@myserver.example.com` on port `2223` and print the remote hostname.
-* Ping `example.org` exactly 4 times, saving the output to `ping_output.txt`.
-* Securely copy the local file `/var/log/custom.log` to `devops@myserver.example.com:~/remote_logs/`.
-* List all listening TCP ports numerically using `ss`.
-
----
-
-### Email submission
-
-**Subject:** HW11 – Networking Commands
-
-**Attach:**
-* `hw11_commands.sh`
-* `ping_output.txt`
-
-**In the body:**
-* Paste the first line of `ping_output.txt`.
-* One sentence describing what you saw when you ran `ss -tln`.
+**Email submission**:  
+- **Subject**: `HW11 – Networking – [Your Name]`  
+- **Body**:  
+  1. Ping results summary  
+  2. One service from `ss` output  
+  3. Your hostname
 
 ---
 
-## Task : Install EPICS Base on your Linux system
+### EPICS Installation Task  
+**Objective**: Install EPICS Base on Rocky Linux. Document your process and verify success.  
 
-**Objective:** Install EPICS Base on your Linux system. This requires researching the correct commands and procedures for your specific Linux distribution.
+---
 
-**Steps:**
+### Task Outline  
+1. **Identify Prerequisites**  
+   Research: What development tools and libraries are required to build EPICS Base?  
+   *Hint*: Focus on C/C++ compilers, build tools, and essential libraries.  
 
-1. **Research Prerequisites:**
+2. **Install Dependencies**  
+   Using `dnf`, install the required packages.  
+   *Document*: List all packages you installed.  
 
-   * Identify the system packages and development tools needed to compile EPICS Base. These typically include C/C++ compilers, `make`, `perl`, and specific development libraries (e.g., `readline`).
-   * Install these dependencies using your distribution’s package manager (`dnf` for Rocky Linux/RHEL-based systems, `apt` for Debian/Ubuntu). Use `sudo` as needed.
-2. **Obtain EPICS Base Source Code:**
+3. **Obtain EPICS Source**  
+   Research: Where is the official EPICS source repository?  
+   *Action*: Download the latest stable release (not git master).  
+   *Document*: Source URL and download command used.  
 
-   * Find the official EPICS Base source repository or download link.
-   * Download or clone the source code into a suitable directory in your home folder (e.g., `~/EPICS`).
-3. **Build EPICS Base:**
+4. **Build EPICS**  
+   Research: What is the standard build command?  
+   *Action*: Compile EPICS Base in its directory.  
+   *Document*: Full build command and any fixes for errors.  
 
-   * Navigate into the EPICS Base directory you downloaded.
-   * Start the build process (usually by running `make` or `gnumake`, possibly with certain options). For example:
+5. **Configure Environment**  
+   Research: What environment variables must be set?  
+   *Action*:  
+   - Set `EPICS_BASE`  
+   - Set `EPICS_HOST_ARCH`  
+   - Add binaries to `PATH`  
+   *Document*: How you made these changes permanent.  
 
-     ```bash
-     make
-     ```
-   * Watch for error messages. If there are missing dependencies or configuration issues, install additional packages or adjust settings as needed.
-4. **Configure Environment Variables:**
+6. **Verify Installation**  
+   *Action*:  
+   - Run `softIoc`  
+   - Check for `epics>` prompt  
+   *Document*: Screenshot of successful prompt.  
 
-   * After building successfully, set environment variables: `EPICS_BASE`, `EPICS_HOST_ARCH`, and add the EPICS `bin` directory to your `PATH`.
-   * Learn how to make these changes permanent (for example, by editing `~/.bashrc` or `~/.profile` so that the variables are set each time you open a terminal).
-   * Apply the changes immediately in your current session with the `source` command (e.g., `source ~/.bashrc`).
-5. **Test the Installation:**
+---
 
-   * Run the `softIoc` command, which is a basic EPICS I/O controller.
-   * If EPICS is installed correctly, you should see an `epics>` prompt.
-   * Exit the `softIoc` prompt (usually by pressing `Ctrl+C` or typing `exit`).
+### Submission Requirements  
+**Email Subject**: `HW12 – EPICS Research Install – [Your Name]`  
+**Body**:  
+1. Prerequisite packages list  
+2. EPICS source URL  
+3. Build command used  
+4. Environment configuration method  
+5. `EPICS_HOST_ARCH` value  
+6. Verification screenshot  
 
-**Evaluation:**
+---
 
-* Can you successfully run `softIoc` from any terminal after setting up your environment variables?
-* Are all necessary files and directories created by the build process present in your EPICS installation path?
+### Research Hints  
+| Step | Key Questions | Verification Tips |
+|------|---------------|-------------------|
+| **1** | What packages provide: <br>- C/C++ compilers? <br>- Make tools? <br>- Perl? <br>- Readline? | `gcc --version` <br>`make --version` |
+| **2** | What `dnf group` installs development tools? | `sudo dnf group list hidden` |
+| **3** | Where are stable releases on epics-controls.org? | Look for "base-R*" directories |
+| **4** | How to start EPICS build? | Run `make` in base directory |
+| **5** | What is `EPICS_HOST_ARCH` format? | Match subdirectory in `$EPICS_BASE/bin/` |
+
+---
