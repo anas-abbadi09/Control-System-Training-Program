@@ -54,6 +54,80 @@ Linux is the **core operating system** for controlling synchrotron light sources
 | Microsoft Store | Software Center            |
 
 
+### Exercise (on Windows 11) - CLI Efficiency:
+
+1. **Create Demo Folder**  
+   Inside your **Downloads** folder, create a directory named "CLI_Demo" (you can do this via GUI or PowerShell)
+
+
+2. **Open PowerShell**  
+   Open **Windows PowerShell** (no admin rights needed - regular user session is safer for file operations)
+
+3. **Navigate to CLI_Demo**  
+   ```powershell
+   cd "$env:USERPROFILE\Downloads\CLI_Demo"
+   ```
+
+4. **Create Test Files**  
+   ```powershell
+   1..100 | ForEach-Object {
+       $types = 'pdf','jpg','txt'
+       $months = 'Jan','Feb','Mar','Apr','May','Jun'
+       $t = $types[($_ - 1) % 3]
+       $m = $months[($_ - 1) % 6]
+       New-Item "File${_}_$m.$t" -ItemType File
+   }
+   ```
+
+5. **Manual Sorting Challenge (GUI Method)**
+- **Task:** Organize files into type/month folders using File Explorer
+- **Steps:**
+  1. Open CLI_Demo in File Explorer
+  2. Create folders: pdf, jpg, txt
+  3. Move all PDFs to pdf folder (repeat for jpg/txt)
+  4. Open pdf folder
+  5. Create Jan-Jun subfolders
+  6. Move files containing "Jan" to Jan folder (repeat for all months)
+  7. Repeat steps 4-6 for jpg and txt folders
+- **Timing:**
+  - Note start time
+  - Perform all steps
+  - Note end time and calculate duration.
+
+6. **Reset Environment**
+
+```powershell
+# Delete all organized content
+Remove-Item -Recurse -Force .\*  # Careful! Only in CLI_Demo
+# Regenerate test files (same as Step 2)
+1..100 | ForEach-Object {
+    $types = 'pdf','jpg','txt'
+    $months = 'Jan','Feb','Mar','Apr','May','Jun'
+    $t = $types[($_ - 1) % 3]
+    $m = $months[($_ - 1) % 6]
+    New-Item "File${_}_$m.$t" -ItemType File
+}
+```
+
+7. **Run Sorting Command**  
+   ```powershell
+   foreach ($t in @('pdf','jpg','txt')) {
+       mkdir $t -ErrorAction Ignore
+       Move-Item "*.$t" $t -ErrorAction SilentlyContinue
+       Push-Location $t
+       foreach ($m in @('Jan','Feb','Mar','Apr','May','Jun')) {
+           mkdir $m -ErrorAction Ignore
+           Get-ChildItem -File -Filter "*$m*" | Move-Item -Destination $m
+       }
+       Pop-Location
+   }
+   ```
+**Key Points:**
+- **Manual task:** Notice how many steps this involves
+- **Automated task:** This same power is amplified in Linux with tools like grep, find, and others
+- Now imagine doing this for 10,000 files instead of 100...
+
+---
 
 ### Terminal
 
