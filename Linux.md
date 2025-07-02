@@ -181,11 +181,12 @@ Master these essentials—they're the foundation of everything:
    mkdir linux_lab
    cd linux_lab
    ```
-2. **Install & Play**
+2. **Install & Try**
 
    ```bash
-   sudo dnf install ninvaders    # Install ninvaders
-   ninvaders                     # Arrow keys to play; Ctrl+C to exit
+   sudo dnf install cowsay    # Install cowsay
+   cowsay  "Hello, World"
+   cowsay -f dragon "Fire Breath"                
    ```
 
 
