@@ -82,23 +82,188 @@ print(len(student))  # 3
 
 
 
-#### **6. Looping Techniques**  
-*Iterate through keys, values, or key-value pairs:*
+## Conditionals and Booleans in Python  
+*Conditionals control program flow using boolean logic. Mastering `if/elif/else` structures and truth value evaluation is essential for decision-making in code.*
+
+
+
+#### **1. Boolean Basics**  
+*Python has two boolean values: `True` and `False`. Comparisons and operations return these values.*
 
 ```python
-# Loop through keys
-for key in student:
-    print(key)
-
-# Loop through key-value pairs
-for key, value in student.items():
-    print(f"{key}: {value}")
-
-# Output:
-# name: Emily
-# courses: ['Math', 'CompSci']
-# phone: 555-1234
+# Simple comparisons
+print(10 > 9)   # True
+print(10 == 10) # True
+print(10 < 5)   # False
 ```
+
+
+
+#### **2. `if` Statements**  
+*Execute code blocks only when conditions evaluate to `True`.*
+
+```python
+# Basic if statement
+language = "Python"
+if language == "Python":
+    print("Language is Python")  # Executes
+
+# Using variables
+is_admin = True
+if is_admin:
+    print("Admin privileges granted")
+```
+
+
+
+#### **3. Comparison Operators**  
+*Test relationships between values.*
+
+| Operator | Meaning          | Example          |
+|----------|------------------|------------------|
+| `==`     | Equal to         | `x == 10`       |
+| `!=`     | Not equal to     | `y != "no"`     |
+| `>`      | Greater than     | `score > 90`    |
+| `<`      | Less than        | `age < 18`      |
+| `>=`     | Greater/equal    | `balance >= 0`  |
+| `<=`     | Less/equal       | `items <= 5`    |
+
+```python
+# Practical comparison
+age = 25
+if age >= 18:
+    print("You can vote!")
+```
+
+
+
+#### **4. `elif` and `else` Clauses**  
+*Handle multiple conditions and default cases.*
+
+```python
+# Multi-branch logic
+score = 85
+
+if score >= 90:
+    print("Grade: A")
+elif score >= 80:
+    print("Grade: B")  # Executes
+elif score >= 70:
+    print("Grade: C")
+else:
+    print("Grade: F")
+```
+
+
+
+#### **5. Boolean Operators**  
+*Combine conditions with `and`, `or`, `not`.*
+
+```python
+# Combining conditions
+is_premium = True
+has_license = False
+
+if is_premium and has_license:
+    print("Full access")
+elif is_premium or has_license:
+    print("Partial access")  # Executes
+elif not has_license:
+    print("License required") 
+```
+
+
+
+#### **6. Truth Value Testing**  
+*Certain values evaluate to `False` (falsy), others to `True` (truthy).*
+
+**Falsy Values:**  
+- `False`
+- `None`
+- Zero: `0`, `0.0`
+- Empty sequences: `""`, `[]`, `()`, `{}`
+
+```python
+# Truthy/Falsy examples
+values = [False, None, 0, "", [], 1, "Hello", [1,2]]
+
+for val in values:
+    if val:
+        print(f"{repr(val)} is truthy")
+    else:
+        print(f"{repr(val)} is falsy")
+```
+
+
+
+#### **7. Identity vs Equality**  
+*`is` checks object identity, `==` checks value equality.*
+
+```python
+a = [1, 2, 3]
+b = [1, 2, 3]
+c = a
+
+print(a == b)  # True (same values)
+print(a is b)  # False (different objects)
+print(a is c)  # True (same object)
+```
+
+
+### Homework: Authentication System  
+*Implement a program that:*  
+
+1. **Validates user credentials**  
+   ```python
+   username = "admin"
+   password = "secure123"
+   is_active = True
+   ```
+
+2. **Checks multiple conditions**  
+   - Verify username/password match  
+   - Check account active status  
+   - Validate password length > 8 characters  
+   - Handle empty inputs  
+
+3. **Provide detailed responses**  
+   ```markdown
+   Access Report:
+   - Username: admin
+   - Password: *******
+   - Active: Yes
+   - Password Strength: Strong
+   - Result: ACCESS GRANTED
+   ```
+
+*Requirements:*  
+- Use `if/elif/else` chain
+- Implement at least 3 boolean operators
+- Check for falsy values (empty strings)
+- Include identity check (`is` operator)
+- Test cases:  
+  ```python
+  # Test 1: Correct credentials (ACCESS GRANTED)
+  # Test 2: Correct user, wrong password (DENIED)
+  # Test 3: Empty username (INVALID INPUT)
+  # Test 4: Correct credentials, inactive (ACCOUNT DISABLED)
+  ```
+
+```python
+# Starter template
+username = input("Username: ")
+password = input("Password: ")
+is_active = True
+
+# Your conditional logic here
+if ...:
+    print("ACCESS GRANTED")
+elif ...:
+    print("ACCOUNT DISABLED")
+else:
+    print("ACCESS DENIED")
+```
+
 
 
 ### Homework: Employee Database  
