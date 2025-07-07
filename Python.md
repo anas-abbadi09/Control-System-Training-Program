@@ -87,22 +87,109 @@ Complete these tasks to confirm your Python environment:
 
 ### 🛠️ Code Editors & IDEs  
 
-Choose tools that match your workflow—from lightweight to full-featured environments:
-
 1. **Terminal Editors** (Fast & Lightweight)  
    - `nano`: Simple text editor  
    - `vim`/`neovim`: Powerful keyboard-driven editor 
 
-
 2. **VS Code** (Recommended)  
-   Free, feature-rich, with excellent Python support:  
+   Free, feature-rich, with excellent Python support
 
 
-3. **PyCharm** (For Professional Development)  
+3. **PyCharm**
    Dedicated Python IDE with advanced debugging  
 
 
-4. **Sublime Text** (Lightweight GUI Alternative)  
+4. **Sublime Text** (Lightweight)  
    Fast, customizable editor with Python plugins  
+---
+
+### 🔢 Working with Numbers in Python  
+
+#### **1. Basic Number Types**  
+```python
+# Integers (whole numbers)
+age = 25
+items = 3
+
+# Floats (decimal numbers)
+price = 9.99
+temperature = 36.6
+```
+
+#### **2. Arithmetic Operations**  
+```python
+# Basic math
+print(10 + 3)   # Addition → 13
+print(10 - 3)   # Subtraction → 7
+print(10 * 3)   # Multiplication → 30
+print(10 / 3)   # True division → 3.333...
+print(10 // 3)  # Floor division → 3
+print(10 % 3)   # Modulus → 1
+print(10 ** 3)  # Exponentiation → 1000
+```
+
+#### **3. Type Conversion**  
+```python
+# Convert between types
+num_str = "15"
+print(int(num_str) + 5)  # → 20
+
+# Float to integer (truncates decimals)
+print(int(9.99))  # → 9
+
+# Integer to float
+print(float(7))   # → 7.0
+```
+
+#### **4. Common Number Methods**  
+```python
+# Absolute value
+print(abs(-5))        # → 5
+
+# Rounding
+print(round(3.14159))     # → 3
+print(round(3.14159, 2))  # → 3.14
+
+# Check if float is whole number
+print((1.0).is_integer())   # → True
+print((1.5).is_integer())   # → False
+```
+
+#### **5. Practical Example: Shopping Cart**  
+```python
+# Calculate total price
+item_price = 12.50
+quantity = 3
+tax_rate = 0.08
+
+subtotal = item_price * quantity
+tax = round(subtotal * tax_rate, 2)
+total = subtotal + tax
+
+print(f"Subtotal: ${subtotal}")
+print(f"Tax (8%): ${tax}")
+print(f"Total: ${total}")
+```
+
+#### **6. Exploring Numeric Methods**  
+Discover available operations:
+```python
+num = 7
+print(dir(num))  # Show all methods
+print(help(float))  # Detailed help
+```
+
+---
+
+### 🧪 Homework: Temperature Converter  
+Create `temperature.py` that:
+1. Converts 78°F to Celsius using: `(F - 32) * 5/9`
+2. Calculates the hypotenuse of a triangle with sides 6 and 8
+3. Prints both results formatted as:
+   ```
+   78°F = 25.56°C
+   Hypotenuse: 10.0
+   ```
+
 ---
 
