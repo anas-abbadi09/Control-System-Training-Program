@@ -433,3 +433,162 @@ print(help(int))    # Full integer class documentation
 - Include comments explaining each calculation  
 - Format output professionally using f-strings
 
+
+## Lists, Tuples, and Sets in Python  
+*These collection types handle sequential and unordered data with distinct characteristics. Lists offer flexibility, tuples provide immutability, and sets ensure uniqueness - each serving specific use cases in data management.*
+
+
+#### **1. Lists: Mutable Sequences**  
+*Lists store ordered collections of items that can be modified after creation. They support indexing, slicing, and various modification methods.*  
+
+```python
+# Creating and accessing lists
+courses = ['history', 'math', 'physics', 'compsci']
+print(courses[0])      # 'history' (indexing)
+print(courses[-1])     # 'compsci' (negative indexing)
+print(courses[0:2])    # ['history', 'math'] (slicing)
+
+# Modifying lists
+courses.append('art')           # Add to end
+courses.insert(0, 'biology')    # Insert at index
+courses.extend(['art', 'edu'])  # Add multiple items
+courses.remove('math')          # Remove item
+popped = courses.pop()          # Remove and return last item
+
+# Sorting and searching
+courses.sort()                  # Alphabetical sort
+courses.sort(reverse=True)      # Reverse sort
+print('art' in courses)         # Membership check (True/False)
+print(courses.index('physics')) # Find position (3)
+```
+
+
+#### **2. Tuples: Immutable Sequences**  
+*Tuples store ordered collections like lists but cannot be modified after creation. They're ideal for fixed datasets.*  
+
+```python
+# Creating and accessing tuples
+tuple_courses = ('history', 'math', 'physics', 'compsci')
+print(tuple_courses[0])     # 'history'
+
+# Attempting modification raises error
+tuple_courses[0] = 'art'  # TypeError: 'tuple' does not support item assignment
+```
+
+
+
+#### **3. Sets: Unordered Unique Collections**  
+*Sets store unordered items with no duplicates. They excel at membership testing and mathematical operations.*  
+
+```python
+# Creating sets and operations
+cs_courses = {'history', 'math', 'physics', 'compsci'}
+art_courses = {'history', 'math', 'art', 'design'}
+
+print(cs_courses.intersection(art_courses))   # Common: {'history', 'math'}
+print(cs_courses.difference(art_courses))      # In cs not art: {'physics', 'compsci'}
+print(cs_courses.union(art_courses))           # All unique items
+
+# Automatic duplicate removal
+duplicate_set = {'math', 'history', 'math', 'physics'}
+print(duplicate_set)  # {'math', 'history', 'physics'} 
+```
+
+
+
+#### **4. Converting Between Types**  
+*Collections can be converted between types using their constructor functions.*  
+
+```python
+# Conversion examples
+tuple_from_list = tuple(courses)       # List → Tuple
+set_from_list = set(courses)            # List → Set (removes duplicates)
+list_from_set = list(art_courses)       # Set → List
+```
+
+
+
+#### **5. Iteration Techniques**  
+*All collections support iteration with for-loops. enumerate() adds indexes.*  
+
+```python
+# Basic iteration
+for course in courses:
+    print(course)
+
+# Iteration with index
+for index, course in enumerate(courses, start=1):
+    print(f"{index}. {course}")
+
+# Set iteration (order not guaranteed)
+for course in cs_courses:
+    print(course.upper())
+```
+
+
+
+#### **6. String Joining/Splitting**  
+*Convert between lists and delimited strings.*  
+
+```python
+# List to string
+course_str = ', '.join(courses)  # 'history, math, physics...'
+
+# String to list
+new_list = course_str.split(', ') # Back to original list
+```
+
+
+
+### 💎 Key Differences Summary  
+| Feature          | List | Tuple | Set      |
+|------------------|------|-------|----------|
+| Mutable          | ✅   | ❌    | ✅       |
+| Ordered          | ✅   | ✅    | ❌       |
+| Allows Duplicates| ✅   | ✅    | ❌       |
+| Indexing Support | ✅   | ✅    | ❌       |
+
+
+
+### Homework: Student Records
+*Implement a program that:*  
+
+1. **Creates collections**  
+   - List: `students = ['John Smith', 'Emma Davis', 'James Wilson']`  
+   - Tuple: `courses = ('Math', 'History', 'Computer Science')`  
+   - Set: `registered_courses = {'Math', 'History'}`  
+
+2. **Performs operations**  
+   - Add "Michael Brown" to students list  
+   - Create new tuple `all_courses = courses + ('Physics',)`  
+   - Add 'Computer Science' to registered_courses  
+   - Find shared courses between `registered_courses` and `{'History', 'Art'}`  
+
+3. **Converts and formats**  
+   - Convert students list to comma-separated string  
+   - Convert "Math,History,Physics" string to set  
+
+4. **Output formatted report**  
+   ```markdown
+   Student Roster:
+   1. John Smith
+   2. Emma Davis
+   3. James Wilson
+   4. Michael Brown
+   
+   Available Courses: ('Math', 'History', 'Computer Science', 'Physics')
+   
+   Registration Status:
+   - Math: Registered
+   - History: Registered
+   - Computer Science: Registered
+   - Physics: Not Registered
+   
+   Shared courses with Art program: {'History'}
+   ```
+
+*Requirements:*  
+- Use all three collection types (list, tuple, set)
+- Include type conversions between collections  
+- Format output using f-strings  
+
