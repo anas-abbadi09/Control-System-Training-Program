@@ -101,6 +101,150 @@ Complete these tasks to confirm your Python environment:
    Fast, customizable editor with Python plugins  
 
 
+
+
+
+
+## Virtual Environments on Rocky Linux 9.6
+
+*Use Python’s built-in `venv` module—pre-included in your existing Python installation—to create isolated project environments.*
+
+
+
+### Why Use Virtual Environments?
+
+* **Dependency isolation**
+  Each project keeps its own package versions—no conflicts between, say, Django 3.x and 4.x.
+
+* **Protect system Python**
+  Avoid “sudo pip install” messing with OS tools—venvs prevent breaking global Python.
+
+* **Reproducibility**
+  With `requirements.txt`, projects can be reliably shared and rebuilt—“works on my machine” becomes real .
+
+* **Safe testing & cleanup**
+  Try experimental packages in a disposable venv—delete it without affecting anything else.
+
+* **Multiple Python versions**
+  Easily run envs with Python 3.9, 3.10, 3.12 etc., side-by-side .
+
+
+###  Developer Voices
+
+> “The idea of venv is to protect your system, and to have multiple incompatible projects running on the same system…” .
+> “The beauty of virtualenv is that it is disposable… you have a pristine python environment.” .
+
+
+
+### In One Sentence
+
+**Virtual environments give each project its own safe, reproducible, and conflict-free Python workspace—protecting both your code and your system.**
+
+
+#### Creating a Virtual Environment
+
+```bash
+mkdir -p ~/environments
+cd ~/environments
+
+# Use your existing Python install (e.g., Python 3.9, 3.11, or 3.12)
+python3 -m venv project1_env
+```
+
+Rocky Linux includes Python 3.x with `venv` fully supported (available since Python 3.6) .
+
+
+
+#### Activating and Using the Environment
+
+```bash
+source project1_env/bin/activate
+
+# Confirm you're using the correct interpreter and packages
+which python
+pip list
+```
+
+Your prompt will display `(project1_env)` when active.
+
+
+
+#### Installing Packages
+
+```bash
+pip install numpy pandas scikit-learn
+pip list
+```
+
+Packages installed here stay isolated within the virtual environment.
+
+
+
+#### Saving and Recreating Environments
+
+```bash
+pip freeze > requirements.txt
+deactivate
+
+python3 -m venv project2_env
+source project2_env/bin/activate
+pip install -r requirements.txt
+```
+
+This ensures consistency across different systems and environments.
+
+
+
+#### pecifying a Different Python Version
+
+Rocky’s AppStream provides Python 3.11 or 3.12 side-by-side with the default:
+
+```bash
+python3.12 -m venv env_py312
+```
+
+
+
+#### **6. Deleting Environments**
+
+```bash
+deactivate
+rm -rf project1_env
+```
+
+Clean and simple removal—just delete the folder.
+
+
+
+
+### Homework: Environment Setup
+
+1. **Setup**
+
+   * `python3 -m venv project_env`
+   * Activate `source project_env/bin/activate`
+   * Install `flask==1.1.2`, `requests`, and `pandas`
+
+2. **Documentation**
+
+   * `pip freeze > requirements.txt`
+   * Deactivate and remove the environment
+
+3. **Recreation**
+
+   * Create `new_env` with `python3 -m venv new_env`
+   * Activate and `pip install -r requirements.txt`
+   * Verify installed packages match
+
+4. **Advanced**
+
+   * Repeat using `python3.12 -m venv project_py312_env` (assuming Python 3.12 is installed via AppStream)
+
+
+
+
+
+
 ##  String Manipulation 
  
 *Strings are immutable sequences of Unicode characters, serving as fundamental building blocks for text processing in Python. In this section, we'll explore their properties and manipulation techniques through practical applications. Remember: every string operation creates a new object rather than modifying the original.*
