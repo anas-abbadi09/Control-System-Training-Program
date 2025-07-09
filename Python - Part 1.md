@@ -23,7 +23,7 @@ Want to create a game, design digital art, or even control a robot? Python is yo
 **Ready to begin your Python journey? Let's go!**
 
 
-## **Installing Python on Rocky Linux 9.6**
+## **Installing Python**
 
 #### Step 1: Check Python Installation
 Verify Python is installed and check your version:
@@ -212,28 +212,32 @@ Clean and simple removal—just delete the folder.
 
 
 
-### Homework: Environment Setup
+### Homework: Virtual Environment Management for a Django Project
 
-1. **Setup**
+You're starting a Django project that requires specific package versions. To prevent conflicts and ensure reproducibility, you'll create isolated virtual environments using `venv`. Complete the following steps in your Rocky Linux 9.6 terminal:
 
-   * `python3 -m venv project_env`
-   * Activate `source project_env/bin/activate`
-   * Install `flask==1.1.2`, `requests`, and `pandas`
+1. **Setup**:  
+   Create a project directory `django_project` in your home folder. Inside it, create a virtual environment named `django_env` using Python 3.x (default version).
 
-2. **Documentation**
+2. **Dependency Installation**:  
+   Activate the environment and install these *exact* packages:  
+   - `Django==3.2.18`  
+   - `psycopg2-binary` (PostgreSQL adapter)  
+   - `python-dotenv` (environment variables loader)  
 
-   * `pip freeze > requirements.txt`
-   * Deactivate and remove the environment
+3. **Documentation**:  
+   Generate a `requirements.txt` file capturing the installed packages.
 
-3. **Recreation**
+4. **Environment Reset**:  
+   Deactivate and delete `django_env`. Then recreate it from scratch using `requirements.txt`.
 
-   * Create `new_env` with `python3 -m venv new_env`
-   * Activate and `pip install -r requirements.txt`
-   * Verify installed packages match
+5. **Advanced**:  
+   Repeat the setup using Python 3.12 (if installed) in a new environment `django_env_py312`.
 
-4. **Advanced**
-
-   * Repeat using `python3.12 -m venv project_py312_env` (assuming Python 3.12 is installed via AppStream)
+**Validation Requirements**:  
+- Confirm active environment via terminal prompt `(django_env)`  
+- Verify Django version matches `3.2.18` after recreation  
+- Ensure `requirements.txt` contains all three packages with exact versions 
 
 
 
