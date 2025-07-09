@@ -68,7 +68,7 @@ Complete these tasks to confirm your Python environment:
    ```python
    # Linux Python Verification
    print("My Python version:")
-   !python --version  # Jupyter-style system command
+   !python --version
    print("\nHomework complete!")
    ```
 
@@ -134,11 +134,6 @@ Complete these tasks to confirm your Python environment:
 > “The idea of venv is to protect your system, and to have multiple incompatible projects running on the same system…” .
 > “The beauty of virtualenv is that it is disposable… you have a pristine python environment.” .
 
-
-
-### In One Sentence
-
-**Virtual environments give each project its own safe, reproducible, and conflict-free Python workspace—protecting both your code and your system.**
 
 
 #### Creating a Virtual Environment
@@ -684,7 +679,7 @@ new_list = course_str.split(', ') # Back to original list
 
 
 
-### 💎 Key Differences Summary  
+### Key Differences Summary  
 | Feature          | List | Tuple | Set      |
 |------------------|------|-------|----------|
 | Mutable          | ✅   | ❌    | ✅       |
